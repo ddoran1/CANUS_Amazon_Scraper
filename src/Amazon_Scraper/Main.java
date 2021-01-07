@@ -1,5 +1,6 @@
 package Amazon_Scraper;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,27 +37,29 @@ public class Main {
 		searchBar.sendKeys("mens shoes");
 		searchButton.click();
 		
+		
+		ArrayList<String> list = new ArrayList();
 		boolean flag = true;
-		int key = 2;
-		//For whatever reason, the cell's 'cel_widget_id' are not perfectly sequential so the buffer will stand 
-		//to keep the engine running until better means are found
-		int buffer = 0;  
-		while(flag) {
-			try {
-				String widget = driver.findElement(By.xpath("//div/div[@class=\"sg-col-inner\"]/span[@cel_widget_id=\"MAIN-SEARCH_RESULTS-"+ key +"\"]//a[@class=\"a-link-normal a-text-normal\"]")).getAttribute("href");
-				System.out.println(widget + "\n");		
-				key++;
-			} catch(NoSuchElementException e) {
-				System.out.println("WIDGET " + key + " NOT FOUND");
-				key++;
-				buffer++;
-				
-				if(buffer == 10)
-					flag = false;
+		int page = 1;
+		try {
+			while(flag) {
+				System.out.println("Scanning page.........." + page);
+			
+				utility.linkParser(driver, list);
+			
+				flag = utility.paging(driver);
+				page++;
 			}
+		} catch(Exception e) {
+			System.out.println("\nEnd of paging\n\n");
+			e.printStackTrace();
 		}
 		
-		utility.paging(driver);
+		
+		for(int i = 0; i < list.size(); i++) 
+			System.out.println(list.get(i));
+			
+		
 		
 		
 		//*******************************************************
