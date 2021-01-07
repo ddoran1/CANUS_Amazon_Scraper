@@ -43,12 +43,8 @@ public class Main {
 		int buffer = 0;  
 		while(flag) {
 			try {
-				//WebElement widget = driver.findElement(By.xpath("//div/div[@class=\"sg-col-inner\"]/span[@cel_widget_id=\"MAIN-SEARCH_RESULTS-"+ key +"\"]"));
-				List<WebElement> widget = driver.findElements(By.xpath("//div/div[@class=\"sg-col-inner\"]/span[@cel_widget_id=\"MAIN-SEARCH_RESULTS-"+ key +"\"]"));
-				Iterator itr = widget.iterator();
-				while(itr.hasNext()) 
-					System.out.println(itr.next().toString());
-				
+				String widget = driver.findElement(By.xpath("//div/div[@class=\"sg-col-inner\"]/span[@cel_widget_id=\"MAIN-SEARCH_RESULTS-"+ key +"\"]//a[@class=\"a-link-normal a-text-normal\"]")).getAttribute("href");
+				System.out.println(widget + "\n");		
 				key++;
 			} catch(NoSuchElementException e) {
 				System.out.println("WIDGET " + key + " NOT FOUND");
