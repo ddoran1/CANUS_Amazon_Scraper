@@ -8,6 +8,11 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/*
+ * This class is a collection of methods for general purpose or testing purposes
+ * 
+ * @author David Doran
+ */
 public class utility {
 	
 	private enum Button {PRESENT, NOT_PRESENT}
