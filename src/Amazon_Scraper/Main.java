@@ -31,8 +31,13 @@ public class Main {
 		searchBar.sendKeys("mens shoes");
 		searchButton.click();
 		
-		
-		ArrayList<String> list = new ArrayList();
+		ArrayList<String> list = pageScanningEngine(driver);
+		listViewer(list);
+			
+	}
+	
+	public static ArrayList<String> pageScanningEngine(WebDriver driver){
+		ArrayList<String> list = new ArrayList<String>();
 		boolean flag = true;
 		int page = 1;
 		try {
@@ -44,15 +49,17 @@ public class Main {
 				flag = utility.paging(driver);
 				page++;
 			}
+			return list;
 		} catch(Exception e) {
 			System.out.println("\nEnd of paging\n\n");
-			e.printStackTrace();
+			//e.printStackTrace();
+			return list;
 		}
-		
-		
+	}
+	
+	public static void listViewer(ArrayList<String> list) {
 		for(int i = 0; i < list.size(); i++) 
 			System.out.println(list.get(i));
-			
 	}
 
 }
