@@ -1,22 +1,16 @@
 package Amazon_Scraper;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ByClassName;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-/**
+/*
  * This is the driver class that will initiate the WebDriver and be the main managing engine
  * 
  * @author David Doran
  */
-
 public class Main {
 
 	public static void main(String[] args) {
@@ -59,18 +53,6 @@ public class Main {
 		for(int i = 0; i < list.size(); i++) 
 			System.out.println(list.get(i));
 			
-		
-		
-		
-		//*******************************************************
-		//************  SEARCH RESULT IDENTIFIERS  **************
-		//*******************************************************
-		// Widget top-level:  data-component-type="s-search-result" data-index="2"   -->> Note: starts at 2 and iterates down from there
-		// Widget mid-level:  cel_widget_id="MAIN-SEARCH_RESULTS-2"  -->> Note: starts at 2 and iterates down from there
-		// href bottom-level: class="a-link-normal a-text-normal" 
-		// Select the widget and select the link via class??
-
-		
 	}
 
 }
