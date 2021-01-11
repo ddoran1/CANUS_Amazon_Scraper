@@ -12,30 +12,37 @@ import org.openqa.selenium.chrome.ChromeDriver;
  * @author David Doran
  */
 public class Main {
+	public static ArrayList<String> list = null;
 
 	public static void main(String[] args) {
+		//INITIATE SEARCH OF DESIRED ITEMS
+		//**********  TO DO  **************
+		//** DEVELOP GUI FOR FUTURE INPUT
+		//** ADD DB FOR PARTITIONED DATA
+		//*********************************
 		
 		//WEBDRIVER SETUP
 		System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\chromedriver_win32\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		driver.get("https://www.amazon.ca/");
 		
-		//INITIATE SEARCH OF DESIRED ITEMS
-		//**********  TO DO  **************
-		//** DEVELOP GUI FOR FUTURE INPUT
-		//** ADD DB FOR PARTITIONED DATA
-		//*********************************
-		WebElement searchBar = driver.findElement(By.id("twotabsearchtextbox"));
-		WebElement searchButton = driver.findElement(By.id("nav-search-submit-button"));
+		//ENTER KEY WORDS INTO SEARCH BAR
+		search(driver, "mens shoes");
 		
-		searchBar.sendKeys("mens shoes");
-		searchButton.click();
-		
-		ArrayList<String> list = pageScanningEngine(driver);
+		//SCAN THE PAGES AND COLLECT PRODUCT LINKS
+		list = pageScanningEngine(driver);
 		listViewer(list);
-			
+		
+		//VISIT EACH LINK AND PARSE OUT ALL THE PRODUCT INFORMATION
+		ProductParser.productParsingEngine(driver, list);
+		
+		//CLOSE DRIVER
+		driver.close();
 	}
 	
+	/*
+	 * 
+	 */
 	public static ArrayList<String> pageScanningEngine(WebDriver driver){
 		ArrayList<String> list = new ArrayList<String>();
 		boolean flag = true;
@@ -49,7 +56,10 @@ public class Main {
 				flag = utility.paging(driver);
 				page++;
 			}
+			
+			System.out.println("\nEnd of paging\n\n");
 			return list;
+			
 		} catch(Exception e) {
 			System.out.println("\nEnd of paging\n\n");
 			//e.printStackTrace();
@@ -57,9 +67,19 @@ public class Main {
 		}
 	}
 	
+	/*
+	 * 
+	 */
 	public static void listViewer(ArrayList<String> list) {
 		for(int i = 0; i < list.size(); i++) 
 			System.out.println(list.get(i));
+	}
+	
+	public static void search(WebDriver driver, String input) {
+		WebElement searchBar = driver.findElement(By.id("twotabsearchtextbox"));
+		WebElement searchButton = driver.findElement(By.id("nav-search-submit-button"));
+		searchBar.sendKeys(input);
+		searchButton.click();
 	}
 
 }

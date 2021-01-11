@@ -15,8 +15,11 @@ public class ProductParser {
 	/*
 	 * 
 	 */
-	public void productParsingEngine(WebDriver driver, ArrayList<String> list) {
+	public static void productParsingEngine(WebDriver driver, ArrayList<String> list) {
 		
+		for(int i = 0; i < list.size(); i++) {
+			driver.get(list.get(i));
+		}
 	}
 
 }
