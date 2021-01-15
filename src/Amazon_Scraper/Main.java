@@ -20,66 +20,35 @@ public class Main {
 		//** DEVELOP GUI FOR FUTURE INPUT
 		//** ADD DB FOR PARTITIONED DATA
 		//*********************************
-		
+		try {
 		//WEBDRIVER SETUP
 		System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\chromedriver_win32\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
+		//WebDriver driver = null; Sorry, we just need to make sure you're not a robot. For best results, please make sure your browser is accepting cookies.
 		driver.get("https://www.amazon.ca/");
+		//driver.get("https://www.amazon.ca/gp/slredirect/picassoRedirect.html/ref=pa_sp_atf_aps_sr_pg1_1?ie=UTF8&adId=A08847781PNULUHZEY1ZP&url=%2FAnbenser-Lightweight-Athletic-Non-Slip-7-15%25EF%25BC%2588Grey%2Fdp%2FB08GKNB1K9%2Fref%3Dsr_1_4_sspa%3Fdchild%3D1%26keywords%3Dmens%2Bshoes%26qid%3D1610432390%26sr%3D8-4-spons%26psc%3D1&qualifier=1610432390&id=6842051030326868&widgetName=sp_atf");
+		ArrayList<String> test_list = new ArrayList<String>();
+		test_list.add("https://www.amazon.ca/gp/slredirect/picassoRedirect.html/ref=pa_sp_atf_aps_sr_pg1_1?ie=UTF8&adId=A08847781PNULUHZEY1ZP&url=%2FAnbenser-Lightweight-Athletic-Non-Slip-7-15%25EF%25BC%2588Grey%2Fdp%2FB08GKNB1K9%2Fref%3Dsr_1_4_sspa%3Fdchild%3D1%26keywords%3Dmens%2Bshoes%26qid%3D1610432390%26sr%3D8-4-spons%26psc%3D1&qualifier=1610432390&id=6842051030326868&widgetName=sp_atf");
+		test_list.add("https://www.amazon.ca/gp/slredirect/picassoRedirect.html/ref=pa_sp_atf_aps_sr_pg1_1?ie=UTF8&adId=A044170348EAUIRBN3YV&url=%2FFUJEAK-Breathable-Athletic-Comfortable-Lightweight%2Fdp%2FB08HWXDZYL%2Fref%3Dsr_1_2_sspa%3Fdchild%3D1%26keywords%3Dmens%2Bshoes%26qid%3D1610497293%26sr%3D8-2-spons%26psc%3D1&qualifier=1610497293&id=8598974689049394&widgetName=sp_atf");
+		ProductParser.productParsingEngine(driver, test_list);
 		
 		//ENTER KEY WORDS INTO SEARCH BAR
-		search(driver, "mens shoes");
+		//utility.search(driver, "mens shoes");
 		
 		//SCAN THE PAGES AND COLLECT PRODUCT LINKS
-		list = pageScanningEngine(driver);
-		listViewer(list);
+		//list = utility.pageScanningEngine(driver);
+		//System.out.println(list.size() + " items scanned\n");
 		
 		//VISIT EACH LINK AND PARSE OUT ALL THE PRODUCT INFORMATION
-		ProductParser.productParsingEngine(driver, list);
+		//ProductParser.productParsingEngine(driver, list);
 		
 		//CLOSE DRIVER
-		driver.close();
-	}
-	
-	/*
-	 * 
-	 */
-	public static ArrayList<String> pageScanningEngine(WebDriver driver){
-		ArrayList<String> list = new ArrayList<String>();
-		boolean flag = true;
-		int page = 1;
-		try {
-			while(flag) {
-				System.out.println("Scanning page.........." + page);
-			
-				utility.linkParser(driver, list);
-			
-				flag = utility.paging(driver);
-				page++;
-			}
-			
-			System.out.println("\nEnd of paging\n\n");
-			return list;
-			
-		} catch(Exception e) {
-			System.out.println("\nEnd of paging\n\n");
-			//e.printStackTrace();
-			return list;
+		//System.out.println("CLOSING DRIVER...\n");
+		//driver.close();
+		//System.out.println("DRIVER CLOSED!");
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
-	}
-	
-	/*
-	 * 
-	 */
-	public static void listViewer(ArrayList<String> list) {
-		for(int i = 0; i < list.size(); i++) 
-			System.out.println(list.get(i));
-	}
-	
-	public static void search(WebDriver driver, String input) {
-		WebElement searchBar = driver.findElement(By.id("twotabsearchtextbox"));
-		WebElement searchButton = driver.findElement(By.id("nav-search-submit-button"));
-		searchBar.sendKeys(input);
-		searchButton.click();
 	}
 
 }

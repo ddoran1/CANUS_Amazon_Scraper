@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/Program Files/Java/selenium-java-4.0.0-alpha-7/selenium-api-4.0.0-alpha-7.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/selenium-java-4.0.0-alpha-7/selenium-api-4.0.0-alpha-7-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/selenium-java-4.0.0-alpha-7/selenium-chrome-driver-4.0.0-alpha-7.jar"/>
@@ -93,5 +97,6 @@
 	<classpathentry kind="lib" path="C:/Program Files/Java/selenium-java-4.0.0-alpha-7/lib/zipkin-2.21.7.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/selenium-java-4.0.0-alpha-7/lib/zipkin-reporter-2.15.2.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/selenium-java-4.0.0-alpha-7/lib/zipkin-reporter-brave-2.15.2.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jsoup/jsoup-1.13.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

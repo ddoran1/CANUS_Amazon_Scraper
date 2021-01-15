@@ -9,7 +9,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /*
- * This class is a collection of methods for general purpose or testing purposes
+ * This class is a collection of methods for general purpose in Main.java; including testing and data viewing.
+ * 
+ * NOTE:  FUTURE ITEREATION COULD USE JSOUP AND DO AWAY WITH THE ARBITRARY WAIT TIMES
  * 
  * @author David Doran
  */
@@ -39,7 +41,7 @@ public class utility {
 					break;
 				
 				Thread.sleep(300);
-				System.out.println("Waiting for page to load.............");
+				//System.out.println("Waiting for page to load.............");
 			}
 			
 			if(next_button == true)
@@ -113,6 +115,48 @@ public class utility {
 			}
 		}
 		return list;
+	}
+	
+	/*
+	 * 
+	 */
+	public static ArrayList<String> pageScanningEngine(WebDriver driver){
+		ArrayList<String> list = new ArrayList<String>();
+		boolean flag = true;
+		int page = 1;
+		try {
+			while(flag) {
+				System.out.println("Scanning page.........." + page);
+			
+				utility.linkParser(driver, list);
+			
+				flag = utility.paging(driver);
+				page++;
+			}
+			
+			System.out.println("\nEnd of paging\n\n");
+			return list;
+			
+		} catch(Exception e) {
+			System.out.println("\nEXCEPTION: End of paging\n\n");
+			//e.printStackTrace();
+			return list;
+		}
+	}
+	
+	/*
+	 * 
+	 */
+	public static void listViewer(ArrayList<String> list) {
+		for(int i = 0; i < list.size(); i++) 
+			System.out.println(list.get(i));
+	}
+	
+	public static void search(WebDriver driver, String input) {
+		WebElement searchBar = driver.findElement(By.id("twotabsearchtextbox"));
+		WebElement searchButton = driver.findElement(By.id("nav-search-submit-button"));
+		searchBar.sendKeys(input);
+		searchButton.click();
 	}
 	
 	/*
