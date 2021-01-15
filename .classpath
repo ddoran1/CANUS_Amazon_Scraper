@@ -98,5 +98,6 @@
 	<classpathentry kind="lib" path="C:/Program Files/Java/selenium-java-4.0.0-alpha-7/lib/zipkin-reporter-2.15.2.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/selenium-java-4.0.0-alpha-7/lib/zipkin-reporter-brave-2.15.2.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/jsoup/jsoup-1.13.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/sqlite/sqlite-jdbc-3.32.3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
