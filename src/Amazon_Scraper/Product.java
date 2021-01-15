@@ -1,5 +1,11 @@
 package Amazon_Scraper;
 
+/*
+ * This class defines a Product from the data provided from the product page
+ * 
+ * @author David Doran
+ */
+
 public class Product {
 	
 	private String link;

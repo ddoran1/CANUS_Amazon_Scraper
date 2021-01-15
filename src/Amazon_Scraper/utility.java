@@ -1,4 +1,5 @@
 package Amazon_Scraper;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -118,7 +119,9 @@ public class utility {
 	}
 	
 	/*
-	 * 
+	 * This method is the main engine that cycles through all the resulting pages after an 
+	 * initial query has been entered into the Amazon search bar via the browser
+	 * @param WebDriver - The WebDriver object, after initially instantiated in the Main.main
 	 */
 	public static ArrayList<String> pageScanningEngine(WebDriver driver){
 		ArrayList<String> list = new ArrayList<String>();
@@ -145,13 +148,19 @@ public class utility {
 	}
 	
 	/*
-	 * 
+	 * Method for view the content of the list containing the collected links
+	 * @param ArrayList<String> - List of parsed links
 	 */
 	public static void listViewer(ArrayList<String> list) {
 		for(int i = 0; i < list.size(); i++) 
 			System.out.println(list.get(i));
 	}
 	
+	/*
+	 * Used to enter keywords into the search bar and click the search button
+	 * @param WebDriver - The WebDriver object, after the being brought to Amazon's main page
+	 * @param String - the keywords to be queried
+	 */
 	public static void search(WebDriver driver, String input) {
 		WebElement searchBar = driver.findElement(By.id("twotabsearchtextbox"));
 		WebElement searchButton = driver.findElement(By.id("nav-search-submit-button"));
@@ -170,6 +179,18 @@ public class utility {
 		Iterator itr = list.iterator();
 		while(itr.hasNext()) 
 			System.out.println(itr.next());
+	}
+	
+	/*
+	 * A method for doing quick tests on the ProductParser.productParsingEngine(WebDriver, ArrayList<String>);
+	 * @param WebDriver - The WebDriver object, after initially instantiated in the Main.main
+	 */
+	public static void test(WebDriver driver) throws InterruptedException, IOException {
+		ArrayList<String> test_list = new ArrayList<String>();
+		test_list.add("https://www.amazon.ca/gp/slredirect/picassoRedirect.html/ref=pa_sp_atf_aps_sr_pg1_1?ie=UTF8&adId=A08847781PNULUHZEY1ZP&url=%2FAnbenser-Lightweight-Athletic-Non-Slip-7-15%25EF%25BC%2588Grey%2Fdp%2FB08GKNB1K9%2Fref%3Dsr_1_4_sspa%3Fdchild%3D1%26keywords%3Dmens%2Bshoes%26qid%3D1610432390%26sr%3D8-4-spons%26psc%3D1&qualifier=1610432390&id=6842051030326868&widgetName=sp_atf");
+		test_list.add("https://www.amazon.ca/gp/slredirect/picassoRedirect.html/ref=pa_sp_atf_aps_sr_pg1_1?ie=UTF8&adId=A044170348EAUIRBN3YV&url=%2FFUJEAK-Breathable-Athletic-Comfortable-Lightweight%2Fdp%2FB08HWXDZYL%2Fref%3Dsr_1_2_sspa%3Fdchild%3D1%26keywords%3Dmens%2Bshoes%26qid%3D1610497293%26sr%3D8-2-spons%26psc%3D1&qualifier=1610497293&id=8598974689049394&widgetName=sp_atf");
+		test_list.add("https://www.amazon.ca/Mishansha-Womens-Waterproof-Outdoor-Walking/dp/B07VYLKVXL/ref=sr_1_17?dchild=1&keywords=mens+shoes&qid=1610682511&sr=8-17");
+		ProductParser.productParsingEngine(driver, test_list);
 	}
 	
 }
