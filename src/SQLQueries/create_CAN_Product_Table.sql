@@ -1,11 +1,7 @@
 /*
-Add recurrence rate
-Add attribute (necessary, neutral, frivilous)
-
-<<<***NOT TESTED***>>>
+NEED TO SORT OUT HOW TO STORE PRICE BETWEEN FIXED AND RANGE
 */
-
-CREATE TABLE IF NOT EXISTS CANAM_Product(
+CREATE TABLE IF NOT EXISTS CAN_Product(
 	primary_key INTEGER PRIMARY KEY,
 	name TEXT NOT NULL, 
 	brand TEXT NOT NULL,

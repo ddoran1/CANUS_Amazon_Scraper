@@ -14,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class Main {
 	public static ArrayList<String> list = null;
 	public static ArrayList<Product> product_list = null;
+	public static SQLConnection conn = null;
 
 	public static void main(String[] args) {
 		//INITIATE SEARCH OF DESIRED ITEMS
@@ -27,6 +28,9 @@ public class Main {
 			System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\chromedriver_win32\\chromedriver.exe");
 			WebDriver driver = new ChromeDriver();
 			driver.get("https://www.amazon.ca/");
+			
+			//DB SETUP
+			conn = new SQLConnection();
 		
 			//ENTER KEY WORDS INTO SEARCH BAR
 			utility.search(driver, "mens shoes");
@@ -40,7 +44,8 @@ public class Main {
 		
 			//CLOSE DRIVER
 			System.out.println("CLOSING DRIVER...\n");
-			driver.close();
+			//driver.close();
+			driver.quit();
 			System.out.println("DRIVER CLOSED");
 			
 		}catch(Exception e) {

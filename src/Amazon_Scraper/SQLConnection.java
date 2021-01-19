@@ -91,7 +91,7 @@ public class SQLConnection {
 			conn = getConnection();
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery(query);
-			System.out.print("\nExpenses Table:  \n");
+//			System.out.print("\nExpenses Table:  \n");;////////
 			while(rs.next()){
 					System.out.print("\tprimary_key = " + rs.getString("primary_key") + "\t");
 					System.out.print("\tname  = " + rs.getString("name") + "\t");

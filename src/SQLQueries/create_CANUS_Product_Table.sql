@@ -1,0 +1,12 @@
+/*
+NEED TO SORT OUT HOW TO STORE PRICE BETWEEN FIXED AND RANGE
+*/
+CREATE TABLE IF NOT EXISTS CANUS_Product(
+	primary_key INTEGER PRIMARY KEY,
+	name TEXT NOT NULL, 
+	brand TEXT NOT NULL,
+	link TEXT NOT NULL,
+	price TEXT,
+	num_of_ratings REAL,
+	rating REAL,
+	);
