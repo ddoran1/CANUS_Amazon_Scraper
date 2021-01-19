@@ -47,7 +47,7 @@ public class SQLConnection {
 	        	conn = ds.getConnection();
 	        } catch ( SQLException e ) {
 	            e.printStackTrace();
-	            System.exit( 0 );
+	            System.exit(0);
 	        }
 
 	        System.out.println( "Created database successfully" );
@@ -58,19 +58,19 @@ public class SQLConnection {
 			return null;
 		}
 	}
-	
-	
-	
+		
 	public void init() throws ClassNotFoundException {
 		getConnection();
 		clearDB();
-		init_CANAM_Product_Table();
+		init_CANUS_Product_Table();
+		init_CAN_Product_Table();
+		init_US_Product_Table();
 	}
 	
-	public void init_CANAM_Product_Table() {
+	public void init_CANUS_Product_Table() {
 		Connection conn = null;
 		try {
-			String query = getQuery("src\\SQLQueries\\create_CANAM_Product_Table.sql");
+			String query = getQuery("src\\SQLQueries\\create_CANUS_Product_Table.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
@@ -82,16 +82,100 @@ public class SQLConnection {
 		}
 	}
 	
-	public void view_CANAM_Product_Table() {
+	public void init_CAN_Product_Table() {
+		Connection conn = null;
+		try {
+			String query = getQuery("src\\SQLQueries\\create_CAN_Product_Table.sql");
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);
+			conn.close();
+		}catch(Exception e) {
+			System.out.println("CREATE TABLE FAILED" + "\n\tconn = " + conn);
+			e.printStackTrace();
+		}
+	}
+	
+	public void init_US_Product_Table() {
+		Connection conn = null;
+		try {
+			String query = getQuery("src\\SQLQueries\\create_US_Product_Table.sql");
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);
+			conn.close();
+		}catch(Exception e) {
+			System.out.println("CREATE TABLE FAILED" + "\n\tconn = " + conn);
+			e.printStackTrace();
+		}
+	}
+	
+	public void view_CANUS_Product_Table() {
 		Connection conn = null;
 		
 		try {
-			String query = getQuery("src\\SQLQueries\\view_CANAM_Product_Table.sql");
+			String query = getQuery("src\\SQLQueries\\view_CANUS_Product_Table.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery(query);
-//			System.out.print("\nExpenses Table:  \n");;////////
+			System.out.print("\nCANUS_Product Table:  \n");
+			while(rs.next()){
+					System.out.print("\tprimary_key = " + rs.getString("primary_key") + "\t");
+					System.out.print("\tname  = " + rs.getString("name") + "\t");
+					System.out.print("\tbrand = " + rs.getString("brand") + "\t");
+					System.out.print("\tlink = " + rs.getString("link") + "\t");
+					System.out.print("\tprice= " + rs.getString("price") + "\t");
+					System.out.print("\tnum_of_ratings = " + rs.getString("num_of_ratings") + "\t");
+					System.out.print("\trating = " + rs.getString("rating") + "\t");
+					System.out.print("\n");
+	        }
+			conn.close();
+		}catch(Exception e) {
+			System.out.println("TABLE VIEW FAILED" + "\n\tconn = " + conn);
+			e.printStackTrace();
+		}
+	}
+	
+	public void view_CAN_Product_Table() {
+		Connection conn = null;
+		
+		try {
+			String query = getQuery("src\\SQLQueries\\view_CAN_Product_Table.sql");
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery(query);
+			System.out.print("\nCAN_Product Table:  \n");
+			while(rs.next()){
+					System.out.print("\tprimary_key = " + rs.getString("primary_key") + "\t");
+					System.out.print("\tname  = " + rs.getString("name") + "\t");
+					System.out.print("\tbrand = " + rs.getString("brand") + "\t");
+					System.out.print("\tlink = " + rs.getString("link") + "\t");
+					System.out.print("\tprice= " + rs.getString("price") + "\t");
+					System.out.print("\tnum_of_ratings = " + rs.getString("num_of_ratings") + "\t");
+					System.out.print("\trating = " + rs.getString("rating") + "\t");
+					System.out.print("\n");
+	        }
+			conn.close();
+		}catch(Exception e) {
+			System.out.println("TABLE VIEW FAILED" + "\n\tconn = " + conn);
+			e.printStackTrace();
+		}
+	}
+	
+	public void view_US_Product_Table() {
+		Connection conn = null;
+		
+		try {
+			String query = getQuery("src\\SQLQueries\\view_US_Product_Table.sql");
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery(query);
+			System.out.print("\nUS_Product Table:  \n");
 			while(rs.next()){
 					System.out.print("\tprimary_key = " + rs.getString("primary_key") + "\t");
 					System.out.print("\tname  = " + rs.getString("name") + "\t");
@@ -111,11 +195,23 @@ public class SQLConnection {
 	
 	public void clearDB() {
 		Connection conn = null;
-		
+		Statement statement = null;
+		String query = "";
+				
 		try {
-			String query = getQuery("src\\application\\SQLQueries\\drop_CANAM_Product_Table.sql");
+			query = getQuery("src\\application\\SQLQueries\\drop_CANUS_Product_Table.sql");
 			conn = getConnection();
-			Statement statement = conn.createStatement();
+			statement = conn.createStatement();
+			statement.executeUpdate(query);
+			
+			query = getQuery("src\\application\\SQLQueries\\drop_CAN_Product_Table.sql");
+			conn = getConnection();
+			statement = conn.createStatement();
+			statement.executeUpdate(query);
+			
+			query = getQuery("src\\application\\SQLQueries\\drop_US_Product_Table.sql");
+			conn = getConnection();
+			statement = conn.createStatement();
 			statement.executeUpdate(query);
 
 			conn.close();
@@ -141,9 +237,10 @@ public class SQLConnection {
 	    }
 	    catch(FileNotFoundException e){
 	        e.printStackTrace();
-	        //Prints out file names at given point in directory
+//	        Prints out file names at given point in directory
 //	        File file = new File(".");
-//	        for(String fileNames : file.list()) System.out.println(fileNames);
+//	        for(String fileNames : file.list()) 
+//	        	System.out.println(fileNames);
 	    }
 	    catch(IOException e){
 	        e.printStackTrace();
