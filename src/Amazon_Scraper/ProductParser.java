@@ -114,6 +114,7 @@ public class ProductParser {
 			
 		} catch(Exception e) {
 			e.printStackTrace();
+			//LOAD FAILED PARSE INTO DB
 			return null;
 		}
 	}

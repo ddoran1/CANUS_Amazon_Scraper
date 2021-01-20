@@ -65,6 +65,7 @@ public class SQLConnection {
 		init_CANUS_Product_Table();
 		init_CAN_Product_Table();
 		init_US_Product_Table();
+		init_Failure_Table();
 	}
 	
 	public void init_CANUS_Product_Table() {
@@ -112,6 +113,21 @@ public class SQLConnection {
 		}
 	}
 	
+	public void init_Failure_Table() {
+		Connection conn = null;
+		try {
+			String query = getQuery("src\\SQLQueries\\create_Failure_Table.sql");
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);
+			conn.close();
+		}catch(Exception e) {
+			System.out.println("CREATE TABLE FAILED" + "\n\tconn = " + conn);
+			e.printStackTrace();
+		}
+	}
+	
 	public void view_CANUS_Product_Table() {
 		Connection conn = null;
 		
@@ -121,16 +137,16 @@ public class SQLConnection {
 			conn = getConnection();
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery(query);
-			System.out.print("\nCANUS_Product Table:  \n");
+			System.out.println("CANUS_Product Table:");
 			while(rs.next()){
-					System.out.print("\tprimary_key = " + rs.getString("primary_key") + "\t");
-					System.out.print("\tname  = " + rs.getString("name") + "\t");
-					System.out.print("\tbrand = " + rs.getString("brand") + "\t");
-					System.out.print("\tlink = " + rs.getString("link") + "\t");
-					System.out.print("\tprice= " + rs.getString("price") + "\t");
-					System.out.print("\tnum_of_ratings = " + rs.getString("num_of_ratings") + "\t");
-					System.out.print("\trating = " + rs.getString("rating") + "\t");
-					System.out.print("\n");
+					System.out.println("\tprimary_key = " + rs.getString("primary_key"));
+					System.out.println("\tname  = " + rs.getString("name"));
+					System.out.println("\tbrand = " + rs.getString("brand"));
+					System.out.println("\tlink = " + rs.getString("link"));
+					System.out.println("\tprice= " + rs.getString("price"));
+					System.out.println("\tnum_of_ratings = " + rs.getString("num_of_ratings"));
+					System.out.println("\trating = " + rs.getString("rating"));
+					System.out.println("\n");
 	        }
 			conn.close();
 		}catch(Exception e) {
@@ -148,16 +164,16 @@ public class SQLConnection {
 			conn = getConnection();
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery(query);
-			System.out.print("\nCAN_Product Table:  \n");
+			System.out.println("CAN_Product Table:");
 			while(rs.next()){
-					System.out.print("\tprimary_key = " + rs.getString("primary_key") + "\t");
-					System.out.print("\tname  = " + rs.getString("name") + "\t");
-					System.out.print("\tbrand = " + rs.getString("brand") + "\t");
-					System.out.print("\tlink = " + rs.getString("link") + "\t");
-					System.out.print("\tprice= " + rs.getString("price") + "\t");
-					System.out.print("\tnum_of_ratings = " + rs.getString("num_of_ratings") + "\t");
-					System.out.print("\trating = " + rs.getString("rating") + "\t");
-					System.out.print("\n");
+					System.out.println("\tprimary_key = " + rs.getString("primary_key"));
+					System.out.println("\tname  = " + rs.getString("name"));
+					System.out.println("\tbrand = " + rs.getString("brand"));
+					System.out.println("\tlink = " + rs.getString("link"));
+					System.out.println("\tprice= " + rs.getString("price"));
+					System.out.println("\tnum_of_ratings = " + rs.getString("num_of_ratings"));
+					System.out.println("\trating = " + rs.getString("rating"));
+					System.out.println("\n");
 	        }
 			conn.close();
 		}catch(Exception e) {
@@ -175,16 +191,37 @@ public class SQLConnection {
 			conn = getConnection();
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery(query);
-			System.out.print("\nUS_Product Table:  \n");
+			System.out.println("US_Product Table:");
 			while(rs.next()){
-					System.out.print("\tprimary_key = " + rs.getString("primary_key") + "\t");
-					System.out.print("\tname  = " + rs.getString("name") + "\t");
-					System.out.print("\tbrand = " + rs.getString("brand") + "\t");
-					System.out.print("\tlink = " + rs.getString("link") + "\t");
-					System.out.print("\tprice= " + rs.getString("price") + "\t");
-					System.out.print("\tnum_of_ratings = " + rs.getString("num_of_ratings") + "\t");
-					System.out.print("\trating = " + rs.getString("rating") + "\t");
-					System.out.print("\n");
+					System.out.println("\tprimary_key = " + rs.getString("primary_key"));
+					System.out.println("\tname  = " + rs.getString("name"));
+					System.out.println("\tbrand = " + rs.getString("brand"));
+					System.out.println("\tlink = " + rs.getString("link"));
+					System.out.println("\tprice= " + rs.getString("price"));
+					System.out.println("\tnum_of_ratings = " + rs.getString("num_of_ratings"));
+					System.out.println("\trating = " + rs.getString("rating"));
+					System.out.println("\n");
+	        }
+			conn.close();
+		}catch(Exception e) {
+			System.out.println("TABLE VIEW FAILED" + "\n\tconn = " + conn);
+			e.printStackTrace();
+		}
+	}
+	
+	public void view_Failure_Table() {
+		Connection conn = null;
+		
+		try {
+			String query = getQuery("src\\SQLQueries\\view_all_Failures.sql");
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery(query);
+			System.out.println("Failure Table:");
+			while(rs.next()){
+				System.out.println("\tprimary_key = " + rs.getString("primary_key"));
+				System.out.println("\tlink = " + rs.getString("link"));
 	        }
 			conn.close();
 		}catch(Exception e) {
@@ -213,10 +250,98 @@ public class SQLConnection {
 			conn = getConnection();
 			statement = conn.createStatement();
 			statement.executeUpdate(query);
+			
+			query = getQuery("src\\application\\SQLQueries\\drop_Failure_Table.sql");
+			conn = getConnection();
+			statement = conn.createStatement();
+			statement.executeUpdate(query);
 
 			conn.close();
 		}catch(Exception e) {
 			System.out.println("DROP TABLE(S) FAILED" + "\n\tconn = " + conn);
+			e.printStackTrace();
+		}
+	}
+	
+	public void insert_CANUS_Product(String name, String brand, String link, String price, String num_of_ratings, String rating) {
+		Connection conn = null;
+		
+		try {
+			String query = getQuery("src\\application\\SQLQueries\\insert_CANUS_Product.sql");
+			query = query.replace("$name", name);
+			query = query.replace("$brand", brand);
+			query = query.replace("$link", link);
+			query = query.replace("$price", price);
+			query = query.replace("$num_of_ratings", num_of_ratings);
+			query = query.replace("$rating", rating);
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);	
+			conn.close();
+		}catch(Exception e) {
+			System.out.println("INSERT FAILED" + "\n\tconn = " + conn);
+			e.printStackTrace();
+		}
+	}
+	
+	public void insert_CAN_Product(String name, String brand, String link, String price, String num_of_ratings, String rating) {
+		Connection conn = null;
+		
+		try {
+			String query = getQuery("src\\application\\SQLQueries\\insert_CAN_Product.sql");
+			query = query.replace("$name", name);
+			query = query.replace("$brand", brand);
+			query = query.replace("$link", link);
+			query = query.replace("$price", price);
+			query = query.replace("$num_of_ratings", num_of_ratings);
+			query = query.replace("$rating", rating);
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);	
+			conn.close();
+		}catch(Exception e) {
+			System.out.println("INSERT FAILED" + "\n\tconn = " + conn);
+			e.printStackTrace();
+		}
+	}
+	
+	public void insert_US_Product(String name, String brand, String link, String price, String num_of_ratings, String rating) {
+		Connection conn = null;
+		
+		try {
+			String query = getQuery("src\\application\\SQLQueries\\insert_US_Product.sql");
+			query = query.replace("$name", name);
+			query = query.replace("$brand", brand);
+			query = query.replace("$link", link);
+			query = query.replace("$price", price);
+			query = query.replace("$num_of_ratings", num_of_ratings);
+			query = query.replace("$rating", rating);
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);	
+			conn.close();
+		}catch(Exception e) {
+			System.out.println("INSERT FAILED" + "\n\tconn = " + conn);
+			e.printStackTrace();
+		}
+	}
+	
+	public void insert_Failure(String link) {
+		Connection conn = null;
+		
+		try {
+			String query = getQuery("src\\application\\SQLQueries\\insert_Failure_Table.sql");
+			query = query.replace("$link", link);
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);	
+			conn.close();
+		}catch(Exception e) {
+			System.out.println("INSERT FAILED" + "\n\tconn = " + conn);
 			e.printStackTrace();
 		}
 	}
