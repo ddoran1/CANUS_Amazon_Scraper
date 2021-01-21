@@ -25,6 +25,7 @@ public class ProductParser {
 	public static ArrayList<Product> product_list = new ArrayList<Product>();
 	public static ArrayList<String> error_list = new ArrayList<String>();
 	public static Exception NoSuchElementException;
+	public static SQLConnection conn = new SQLConnection();
 	
 	/*
 	 * Cycles though given list of links and parses out product data into an ArrayList, also complies problematic links for future fixes
@@ -109,6 +110,9 @@ public class ProductParser {
 			} catch(NullPointerException e) {
 				System.out.println("\tPRODUCT NOT YET RATED");
 			}
+			
+			conn.insert_CAN_Product(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
+					product.getNum_of_ratings(), product.getRating());
 
 			return product;
 			

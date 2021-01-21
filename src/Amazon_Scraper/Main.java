@@ -41,6 +41,12 @@ public class Main {
 		
 			//VISIT EACH LINK AND PARSE OUT ALL THE PRODUCT INFORMATION
 			product_list = ProductParser.productParsingEngine(driver, list);
+			
+			//TEST SUITE
+			utility.test(driver);
+			
+			//VIEW DB INPUT
+			//conn.view_CAN_Product_Table();
 		
 			//CLOSE DRIVER
 			System.out.println("CLOSING DRIVER...\n");

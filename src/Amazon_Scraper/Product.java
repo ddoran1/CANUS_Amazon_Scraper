@@ -10,12 +10,13 @@ public class Product {
 	
 	private String link;
 	private String name;
+	private String brand;
 	private String price;
 	private String rating;
 	private String num_of_ratings;
 	
 	
-	public Product(String linkIn, String nameIn, String priceIn, String ratingIn, String num_of_ratingsIn) {
+	public Product(String linkIn, String nameIn, String brandIn, String priceIn, String ratingIn, String num_of_ratingsIn) {
 		link = linkIn;
 		name = nameIn;
 		price = priceIn;
@@ -26,6 +27,7 @@ public class Product {
 	public Product() {
 		link = "";
 		name = "";
+		brand = "";
 		price = "";
 		rating = "";
 		num_of_ratings = "";
@@ -44,6 +46,15 @@ public class Product {
 
 	public String getName() {
 		return name;
+	}
+
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+	
+	public String getBrand() {
+		return brand;
 	}
 
 

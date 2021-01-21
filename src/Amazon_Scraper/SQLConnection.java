@@ -29,34 +29,39 @@ public class SQLConnection {
 	
 	public Connection getConnection() {
 		Connection conn = null;
-		try {
+//		try {
 			
 	        try {
-	            ds = new SQLiteDataSource();
-	            ds.setUrl("jdbc:sqlite:appDB.db");
+//	            ds = new SQLiteDataSource();
+//	            ds.setUrl("jdbc:sqlite:appDB.db");
+				Class.forName("org.sqlite.JDBC");
+				conn = DriverManager.getConnection("jdbc:sqlite:appDB.db");
+				return conn;
 	        } catch ( Exception e ) {
 	            e.printStackTrace();
-	            System.exit(0);
+	            return null;
 	        }
 	        
-	        System.out.println( "Opened database successfully" );
+//	        System.out.println( "Opened database successfully"
+//	        		+ "\n\tSQLiteDataSource:  " 
+//	        		+ "\n\t\tURL:  " + ds.getUrl()
+//	        		+ "\n\t\ttoString(): " + ds.toString());
+	               
+//	        try{
+//	        	conn = ds.getConnection();
+//	        } catch ( SQLException e ) {
+//	            e.printStackTrace();
+//	            System.exit(0);
+//	        }
+
+//	        System.out.println( "Created database successfully" 
+//	        		+ "\n\t\ttoString():  " + conn.toString());
 
 	        
-	        
-	        try{
-	        	conn = ds.getConnection();
-	        } catch ( SQLException e ) {
-	            e.printStackTrace();
-	            System.exit(0);
-	        }
-
-	        System.out.println( "Created database successfully" );
-
-	        return conn;
-		}catch(Exception e) {
-			e.getStackTrace();
-			return null;
-		}
+//		}catch(Exception e) {
+//			e.getStackTrace();
+//			return null;
+//		}
 	}
 		
 	public void init() throws ClassNotFoundException {
@@ -70,60 +75,80 @@ public class SQLConnection {
 	
 	public void init_CANUS_Product_Table() {
 		Connection conn = null;
+		String query = "";
 		try {
-			String query = getQuery("src\\SQLQueries\\create_CANUS_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\create_CANUS_Product_Table.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(query);
 			conn.close();
+			System.out.println("CANUS TABLE CREATION SUCCESSFUL"); 
 		}catch(Exception e) {
-			System.out.println("CREATE TABLE FAILED" + "\n\tconn = " + conn);
+			System.out.println("CREATE TABLE FAILED" 
+		+ "\n\tconn = " + conn
+		+ "\n\tquery = " + query);
+			
 			e.printStackTrace();
 		}
 	}
 	
 	public void init_CAN_Product_Table() {
 		Connection conn = null;
+		String query = "";
 		try {
-			String query = getQuery("src\\SQLQueries\\create_CAN_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\create_CAN_Product_Table.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(query);
 			conn.close();
+			System.out.println("CAN TABLE CREATION SUCCESSFUL"); 
 		}catch(Exception e) {
-			System.out.println("CREATE TABLE FAILED" + "\n\tconn = " + conn);
+			System.out.println("CREATE TABLE FAILED" 
+		+ "\n\tconn = " + conn
+		+ "\n\tquery = " + query);
+			
 			e.printStackTrace();
 		}
 	}
 	
 	public void init_US_Product_Table() {
 		Connection conn = null;
+		String query = "";
 		try {
-			String query = getQuery("src\\SQLQueries\\create_US_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\create_US_Product_Table.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(query);
 			conn.close();
+			System.out.println("TABLE CREATION SUCCESSFUL"); 
 		}catch(Exception e) {
-			System.out.println("CREATE TABLE FAILED" + "\n\tconn = " + conn);
+			System.out.println("US CREATE TABLE FAILED" 
+		+ "\n\tconn = " + conn
+		+ "\n\tquery = " + query);
+			
 			e.printStackTrace();
 		}
 	}
 	
 	public void init_Failure_Table() {
 		Connection conn = null;
+		String query = "";
 		try {
-			String query = getQuery("src\\SQLQueries\\create_Failure_Table.sql");
+			query = getQuery("src\\SQLQueries\\create_Failure_Table.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(query);
 			conn.close();
+			System.out.println("FAILURE TABLE CREATION SUCCESSFUL"); 
 		}catch(Exception e) {
-			System.out.println("CREATE TABLE FAILED" + "\n\tconn = " + conn);
+			System.out.println("CREATE TABLE FAILED" 
+		+ "\n\tconn = " + conn
+		+ "\n\tquery = " + query);
+			
 			e.printStackTrace();
 		}
 	}
@@ -159,7 +184,7 @@ public class SQLConnection {
 		Connection conn = null;
 		
 		try {
-			String query = getQuery("src\\SQLQueries\\view_CAN_Product_Table.sql");
+			String query = getQuery("src\\SQLQueries\\view_all_CAN_Product.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
@@ -236,22 +261,22 @@ public class SQLConnection {
 		String query = "";
 				
 		try {
-			query = getQuery("src\\application\\SQLQueries\\drop_CANUS_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\drop_CANUS_Product_Table.sql");
 			conn = getConnection();
 			statement = conn.createStatement();
 			statement.executeUpdate(query);
 			
-			query = getQuery("src\\application\\SQLQueries\\drop_CAN_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\drop_CAN_Product_Table.sql");
 			conn = getConnection();
 			statement = conn.createStatement();
 			statement.executeUpdate(query);
 			
-			query = getQuery("src\\application\\SQLQueries\\drop_US_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\drop_US_Product_Table.sql");
 			conn = getConnection();
 			statement = conn.createStatement();
 			statement.executeUpdate(query);
 			
-			query = getQuery("src\\application\\SQLQueries\\drop_Failure_Table.sql");
+			query = getQuery("src\\SQLQueries\\drop_Failure_Table.sql");
 			conn = getConnection();
 			statement = conn.createStatement();
 			statement.executeUpdate(query);
@@ -267,7 +292,7 @@ public class SQLConnection {
 		Connection conn = null;
 		
 		try {
-			String query = getQuery("src\\application\\SQLQueries\\insert_CANUS_Product.sql");
+			String query = getQuery("src\\SQLQueries\\insert_CANUS_Product.sql");
 			query = query.replace("$name", name);
 			query = query.replace("$brand", brand);
 			query = query.replace("$link", link);
@@ -276,6 +301,8 @@ public class SQLConnection {
 			query = query.replace("$rating", rating);
 			
 			conn = getConnection();
+
+			System.out.println("INPUTTING ITEM @ " + conn.toString());
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(query);	
 			conn.close();
@@ -289,7 +316,7 @@ public class SQLConnection {
 		Connection conn = null;
 		
 		try {
-			String query = getQuery("src\\application\\SQLQueries\\insert_CAN_Product.sql");
+			String query = getQuery("src\\SQLQueries\\insert_CAN_Product.sql");
 			query = query.replace("$name", name);
 			query = query.replace("$brand", brand);
 			query = query.replace("$link", link);
@@ -298,6 +325,8 @@ public class SQLConnection {
 			query = query.replace("$rating", rating);
 			
 			conn = getConnection();
+
+			System.out.println("INPUTTING ITEM @ " + conn.toString());
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(query);	
 			conn.close();
@@ -311,7 +340,7 @@ public class SQLConnection {
 		Connection conn = null;
 		
 		try {
-			String query = getQuery("src\\application\\SQLQueries\\insert_US_Product.sql");
+			String query = getQuery("src\\SQLQueries\\insert_US_Product.sql");
 			query = query.replace("$name", name);
 			query = query.replace("$brand", brand);
 			query = query.replace("$link", link);
@@ -333,7 +362,7 @@ public class SQLConnection {
 		Connection conn = null;
 		
 		try {
-			String query = getQuery("src\\application\\SQLQueries\\insert_Failure_Table.sql");
+			String query = getQuery("src\\SQLQueries\\insert_Failure_Table.sql");
 			query = query.replace("$link", link);
 			
 			conn = getConnection();

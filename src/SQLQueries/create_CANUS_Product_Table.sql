@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS CANUS_Product(
 	link TEXT NOT NULL,
 	price TEXT,
 	num_of_ratings REAL,
-	rating REAL,
+	rating REAL
 	);

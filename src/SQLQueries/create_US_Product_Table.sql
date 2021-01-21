@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS US_Product(
 	link TEXT NOT NULL,
 	price REAL,
 	num_of_ratings REAL,
-	rating REAL,
+	rating REAL
 	);
