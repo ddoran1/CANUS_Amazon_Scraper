@@ -31,39 +31,15 @@ public class SQLConnection {
 	
 	public Connection getConnection() {
 		Connection conn = null;
-//		try {
 			
-	        try {
-//	            ds = new SQLiteDataSource();
-//	            ds.setUrl("jdbc:sqlite:appDB.db");
-				Class.forName("org.sqlite.JDBC");
-				conn = DriverManager.getConnection("jdbc:sqlite:appDB.db");
-				return conn;
-	        } catch ( Exception e ) {
-	            e.printStackTrace();
-	            return null;
-	        }
-	        
-//	        System.out.println( "Opened database successfully"
-//	        		+ "\n\tSQLiteDataSource:  " 
-//	        		+ "\n\t\tURL:  " + ds.getUrl()
-//	        		+ "\n\t\ttoString(): " + ds.toString());
-	               
-//	        try{
-//	        	conn = ds.getConnection();
-//	        } catch ( SQLException e ) {
-//	            e.printStackTrace();
-//	            System.exit(0);
-//	        }
-
-//	        System.out.println( "Created database successfully" 
-//	        		+ "\n\t\ttoString():  " + conn.toString());
-
-	        
-//		}catch(Exception e) {
-//			e.getStsackTrace();
-//			return null;
-//		}
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection("jdbc:sqlite:appDB.db");
+			return conn;
+		} catch ( Exception e ) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 		
 	public void init() throws ClassNotFoundException {
