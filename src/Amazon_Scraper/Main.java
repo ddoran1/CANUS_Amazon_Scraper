@@ -20,16 +20,16 @@ public class Main {
 		//INITIATE SEARCH OF DESIRED ITEMS
 		//**********  TO DO  **************
 		//** DEVELOP GUI FOR FUTURE INPUT
+		//***** input files from user
+		//***** input search bar
 		//** ADD DB FOR PARTITIONED DATA
 		//*********************************
 		
 		try {
-			//WEBDRIVER SETUP
+			//WEBDRIVER AND DB SETUP
 			System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\chromedriver_win32\\chromedriver.exe");
 			WebDriver driver = new ChromeDriver();
 			driver.get("https://www.amazon.ca/");
-			
-			//DB SETUP
 			conn = new SQLConnection();
 		
 			//ENTER KEY WORDS INTO SEARCH BAR
@@ -42,15 +42,18 @@ public class Main {
 			//VISIT EACH LINK AND PARSE OUT ALL THE PRODUCT INFORMATION
 			product_list = ProductParser.productParsingEngine(driver, list);
 			
-			//TEST SUITE
-			utility.test(driver);
+//			//TEST SUITE
+//			conn = new SQLConnection();
+//			utility.test(driver);
+//			utility.failure_Table_Test(driver, conn);
+//			conn.test_Failure();
 			
 			//VIEW DB INPUT
-			//conn.view_CAN_Product_Table();
-		
+			conn.view_CAN_Product_Table();
+			conn.view_Failure_Table();
+
 			//CLOSE DRIVER
 			System.out.println("CLOSING DRIVER...\n");
-			//driver.close();
 			driver.quit();
 			System.out.println("DRIVER CLOSED");
 			

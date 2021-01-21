@@ -25,7 +25,7 @@ public class ProductParser {
 	public static ArrayList<Product> product_list = new ArrayList<Product>();
 	public static ArrayList<String> error_list = new ArrayList<String>();
 	public static Exception NoSuchElementException;
-	public static SQLConnection conn = new SQLConnection();
+	//public static SQLConnection conn = new SQLConnection();
 	
 	/*
 	 * Cycles though given list of links and parses out product data into an ArrayList, also complies problematic links for future fixes
@@ -37,7 +37,7 @@ public class ProductParser {
 		
 		for(int i = 0; i < list.size(); i++) {
 			driver.get(list.get(i));
-			System.out.println("Viewing item " + (i+1) + " @ " + list.get(i));
+			//System.out.println("Viewing item " + (i+1) + " @ " + list.get(i));
 			product = productDataParser(driver, list.get(i));
 			if(product == null)
 				error_list.add(list.get(i));
@@ -56,69 +56,76 @@ public class ProductParser {
 		try {
 			Product product = new Product();
 			Document doc = Jsoup.parse(driver.getPageSource(), driver.getCurrentUrl());
+			//System.out.println("\nParsing item...");
 		
 			//LINK
 			product.setLink(link);
+			//System.out.println("\t" + link);
 		
 			//BRAND
 			Element brand = doc.getElementById("bylineInfo");
 			String parsed_brand = parseBrand(brand.html());
-			System.out.println("\t" + parsed_brand);
-			product.setName(parsed_brand);
+			parsed_brand = parsed_brand.replaceAll("'", "''");
+			product.setBrand(parsed_brand);
+			//System.out.println("\t" + parsed_brand);
 
 			//NAME
 			Elements name = doc.getElementById("titleSection").getElementsByTag("span");
-			System.out.println("\t" + name.text());
-			product.setName(name.text());
+			String parsed_name = name.text();
+			parsed_name = parsed_name.replaceAll("'", "''");
+			product.setName(parsed_name);
+			//System.out.println("\t" + name.text());
 		
 	
 			//PRICE
-			//******************************************************************
-			//** NOTE: If the product does not have one unified price, but rather has a range instead, returns null pointer exception
-			//******************************************************************
+			//*******************************************************************
+			//** NOTE: If the product does not have one unified price, but rather 
+			//** has a range instead, returns null pointer exception
+			//*******************************************************************
 			String parsed_price = "";
 			try {
 				Elements price = doc.getElementById("priceInsideBuyBox_feature_div").getElementsByTag("span");
-				parsed_price = parsePrice(price.text());
-				System.out.println("\t" + parsed_price);
+				parsed_price = parsePrice(price.text());			
 				product.setPrice(parsed_price);
+				//System.out.println("\t" + parsed_price);
 				
 			} catch(NullPointerException e){
 				Elements price = doc.getElementById("unifiedPrice_feature_div").getElementsByTag("span");
 				parsed_price = parsePrice(price.text());
-				System.out.println("\tPRICE RANGE:  " + parsed_price);
 				product.setPrice(parsed_price);
+				//System.out.println("\t" + parsed_price);
 			}
 
 			//NUMBER OF RATINGS AND PRODUCT RATING
 			//******************************************************************
-			//** NOTE: if no reviews then this returns a null pointer exception
+			//** NOTE: If no reviews, then this returns a null pointer exception
 			//******************************************************************
 			try {
 				//NUMBER OF RATINGS
 				Element num_of_ratings = doc.getElementById("acrCustomerReviewText");
-				String parsed_num_of_ratings = parseNumOfRatings(num_of_ratings.html());
-				System.out.println("\t" + parsed_num_of_ratings);
-				product.setRating(parsed_num_of_ratings);
+				String parsed_num_of_ratings = parseNumOfRatings(num_of_ratings.html());	
+				product.setNum_of_ratings(parsed_num_of_ratings);
+				//System.out.println("\t" + parsed_num_of_ratings);
 		
 				//RATING
 				Elements rating = doc.getElementsByClass("a-icon-alt");
 				String parsed_rating = parseRating(rating.get(0).html());
-				System.out.println("\t" + parsed_rating);
 				product.setRating(parsed_rating);
+				//System.out.println("\t" + parsed_rating);
 				
 			} catch(NullPointerException e) {
 				System.out.println("\tPRODUCT NOT YET RATED");
 			}
 			
-			conn.insert_CAN_Product(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
+			//LOAD RESULTS INTO DB
+			//NEED TO ADD SECTION TO ALLOCATE WHICH TABLE TO BE INSERTED INTO
+			Main.conn.insert_CAN_Product(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
 					product.getNum_of_ratings(), product.getRating());
-
+			
 			return product;
 			
 		} catch(Exception e) {
-			e.printStackTrace();
-			//LOAD FAILED PARSE INTO DB
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -166,12 +173,10 @@ public class ProductParser {
 	}
 	
 	
-	
 	//********************************************************************
 	//**  WAIT AND CHECK METHODS: USED FOR CHECKING IF HTML WAS LOADED  **
 	//********************************************************************
-	
-	
+		
 	
 	public static void wait(WebDriver driver) {
 		boolean add_button = false;

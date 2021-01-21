@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS CAN_Product(
 	brand TEXT NOT NULL,
 	link TEXT NOT NULL,
 	price TEXT,
-	num_of_ratings TEXT,
-	rating TEXT
+	num_of_ratings VARCHAR(7),
+	rating VARCHAR(3)
 	);
