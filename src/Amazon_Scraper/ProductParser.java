@@ -1,18 +1,16 @@
 package Amazon_Scraper;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import Amazon_Scraper.WebDriverThread.Country;
 
 /*
  * This class will be used for the purpose of parsing data out of the collection of product links
@@ -25,42 +23,51 @@ public class ProductParser {
 	public static ArrayList<Product> product_list = new ArrayList<Product>();
 	public static ArrayList<String> error_list = new ArrayList<String>();
 	public static Exception NoSuchElementException;
-	//public static SQLConnection conn = new SQLConnection();
 	
 	/*
 	 * Cycles though given list of links and parses out product data into an ArrayList, also complies problematic links for future fixes
 	 * @param WebDriver - @param WebDriver - The WebDriver object for getting the HTML from each product page
 	 * @param ArrayList<String> - the list of links to be scraped and parsed
 	 */
-	public static ArrayList<Product> productParsingEngine(WebDriver driver, ArrayList<String> list) throws InterruptedException, IOException {
-		Product product = null;
+	public static void productParsingEngine(WebDriver driver, ArrayList<String> product_link_list, ArrayList<Product> product_list, Country country) throws InterruptedException, IOException {
+		Product product = null;		
 		
-		for(int i = 0; i < list.size(); i++) {
-			driver.get(list.get(i));
-			//System.out.println("Viewing item " + (i+1) + " @ " + list.get(i));
-			product = productDataParser(driver, list.get(i));
+		for(int i = 0; i < product_link_list.size(); i++) {
+			driver.get(product_link_list.get(i));
+			
+			product = productDataParser(driver, product_link_list.get(i), country);
 			if(product == null)
-				error_list.add(list.get(i));
+				error_list.add(product_link_list.get(i));
 			else
 				product_list.add(product);
 		}
-		return product_list;
+		
+		if(error_list.size() > 0) {
+			logErrorList(error_list);
+			System.out.println("ERROR(S) FOUND: LINK(S) FAILED TO PARSE");
+		}
+		
 	}
 	
+	private static void logErrorList(ArrayList<String> error_list) {
+		
+		for(int i=0; i < error_list.size(); i++) 
+			Main.conn.insert_Failure(error_list.get(i));
+	}
+
 	/*
 	 * Parses through HTML to acquire product data
 	 * @param WebDriver - @param WebDriver - The WebDriver object for getting the HTML from each product page
 	 * @param String - specific product link
 	 */
-	public static Product productDataParser(WebDriver driver, String link) throws InterruptedException, IOException {
+	public static Product productDataParser(WebDriver driver, String link, Country country) throws InterruptedException, IOException {
 		try {
 			Product product = new Product();
 			Document doc = Jsoup.parse(driver.getPageSource(), driver.getCurrentUrl());
-			//System.out.println("\nParsing item...");
+			System.out.println("\nParsing item...");
 		
 			//LINK
 			product.setLink(link);
-			//System.out.println("\t" + link);
 		
 			//BRAND
 			Element brand = doc.getElementById("bylineInfo");
@@ -74,14 +81,14 @@ public class ProductParser {
 			String parsed_name = name.text();
 			parsed_name = parsed_name.replaceAll("'", "''");
 			product.setName(parsed_name);
-			//System.out.println("\t" + name.text());
+			//System.out.println("\t" + parsed_name);
 		
 	
 			//PRICE
-			//*******************************************************************
-			//** NOTE: If the product does not have one unified price, but rather 
-			//** has a range instead, returns null pointer exception
-			//*******************************************************************
+			//************************************************************************
+			//*** NOTE: If the product does not have one unified price, but rather ***
+			//*** has a range instead, returns null pointer exception              ***
+			//************************************************************************
 			String parsed_price = "";
 			try {
 				Elements price = doc.getElementById("priceInsideBuyBox_feature_div").getElementsByTag("span");
@@ -97,9 +104,9 @@ public class ProductParser {
 			}
 
 			//NUMBER OF RATINGS AND PRODUCT RATING
-			//******************************************************************
-			//** NOTE: If no reviews, then this returns a null pointer exception
-			//******************************************************************
+			//***********************************************************************
+			//*** NOTE: If no reviews, then this returns a null pointer exception ***
+			//***********************************************************************
 			try {
 				//NUMBER OF RATINGS
 				Element num_of_ratings = doc.getElementById("acrCustomerReviewText");
@@ -112,15 +119,26 @@ public class ProductParser {
 				String parsed_rating = parseRating(rating.get(0).html());
 				product.setRating(parsed_rating);
 				//System.out.println("\t" + parsed_rating);
-				
 			} catch(NullPointerException e) {
 				System.out.println("\tPRODUCT NOT YET RATED");
-			}
+			} 
 			
 			//LOAD RESULTS INTO DB
 			//NEED TO ADD SECTION TO ALLOCATE WHICH TABLE TO BE INSERTED INTO
-			Main.conn.insert_CAN_Product(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
-					product.getNum_of_ratings(), product.getRating());
+			switch(country) {
+			
+				case CAN:{
+					Main.conn.insert_CAN_Product(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
+						product.getNum_of_ratings(), product.getRating());
+					break;
+				}
+				
+				case US:{
+					Main.conn.insert_US_Product(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
+							product.getNum_of_ratings(), product.getRating());
+					break;
+				}
+			}
 			
 			return product;
 			
@@ -167,7 +185,11 @@ public class ProductParser {
 	public static String parseNumOfRatings(String raw) {
 		String num_of_rating = "";
 		
-		num_of_rating = raw.substring(0, raw.indexOf("ratings") - 1);
+		try {
+			num_of_rating = raw.substring(0, raw.indexOf("ratings") - 1);
+		} catch(StringIndexOutOfBoundsException e) {
+			num_of_rating = raw.substring(0, raw.indexOf("rating") - 1);
+		}
 		
 		return num_of_rating;
 	}

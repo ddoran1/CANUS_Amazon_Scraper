@@ -91,5 +91,16 @@ public class Product {
 	public void setNum_of_ratings(String num_of_ratings) {
 		this.num_of_ratings = num_of_ratings;
 	}
+	
+	public String toString() {
+		System.out.println("\tname: \t\t" + name);
+		System.out.println("\tbrand: \t\t" + brand);
+		System.out.println("\tlink: \t\t" + link);
+		System.out.println("\tprice: \t\t" + price);
+		System.out.println("\tnum_of_ratings: " + num_of_ratings);
+		System.out.println("\trating: \t" + rating);
+		
+		return "";
+	}
 
 }

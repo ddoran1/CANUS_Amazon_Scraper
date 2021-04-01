@@ -1,30 +1,22 @@
 package Amazon_Scraper;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import org.sqlite.SQLiteDataSource;
-
 public class SQLConnection {
-	public SQLiteDataSource ds = null;
-	public static PreparedStatement pst = null;
-	public static ResultSet rs = null;
 
 	public SQLConnection() {
 		try {
 			init();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -33,8 +25,9 @@ public class SQLConnection {
 		Connection conn = null;
 			
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:appDB.db");
+			String key = "org.sqlite.JDBC";
+			Class.forName(key);
+			conn = DriverManager.getConnection(app_properties.loadSetting(key));
 			return conn;
 		} catch ( Exception e ) {
 			e.printStackTrace();
@@ -43,7 +36,15 @@ public class SQLConnection {
 	}
 		
 	public void init() throws ClassNotFoundException {
-		getConnection();
+		
+		try {
+			Connection conn = null;
+			conn = getConnection();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		clearDB();
 		init_CANUS_Product_Table();
 		init_CAN_Product_Table();
@@ -168,6 +169,7 @@ public class SQLConnection {
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery(query);
 			System.out.println("\n\nCAN_Product Table:");
+			int item_count = 0;
 			while(rs.next()){
 					System.out.println("\tprimary_key    = " + rs.getString("primary_key"));
 					System.out.println("\tname           = " + rs.getString("name"));
@@ -177,7 +179,9 @@ public class SQLConnection {
 					System.out.println("\tnum_of_ratings = " + rs.getString("num_of_ratings"));
 					System.out.println("\trating         = " + rs.getString("rating"));
 					System.out.println("\n");
+					item_count++;
 	        }
+			System.out.println("Number of items in CAN table: " + item_count);
 			conn.close();
 		}catch(Exception e) {
 			System.out.println("TABLE VIEW FAILED" + "\n\tconn = " + conn);
@@ -189,12 +193,13 @@ public class SQLConnection {
 		Connection conn = null;
 		
 		try {
-			String query = getQuery("src\\SQLQueries\\view_US_Product_Table.sql");
+			String query = getQuery("src\\SQLQueries\\view_all_US_Product.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery(query);
 			System.out.println("US_Product Table:");
+			int item_count = 0;
 			while(rs.next()){
 					System.out.println("\tprimary_key = " + rs.getString("primary_key"));
 					System.out.println("\tname  = " + rs.getString("name"));
@@ -204,7 +209,9 @@ public class SQLConnection {
 					System.out.println("\tnum_of_ratings = " + rs.getString("num_of_ratings"));
 					System.out.println("\trating = " + rs.getString("rating"));
 					System.out.println("\n");
+					item_count++;
 	        }
+			System.out.println("Number of items in US table: " + item_count);
 			conn.close();
 		}catch(Exception e) {
 			System.out.println("TABLE VIEW FAILED" + "\n\tconn = " + conn);
@@ -326,6 +333,8 @@ public class SQLConnection {
 		Connection conn = null;
 		String query = "";
 		
+		System.out.println("INSERTING...\t" + name);
+		
 		try {
 			query = getQuery("src\\SQLQueries\\insert_CAN_Product.sql");
 			query = query.replace("$name", name);
@@ -334,9 +343,8 @@ public class SQLConnection {
 			query = query.replace("$price", price);
 			query = query.replace("$num_of_ratings", num_of_ratings);
 			query = query.replace("$rating", rating);
-			
+						
 			conn = getConnection();
-
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(query);	
 		}catch(Exception e) {
@@ -355,9 +363,11 @@ public class SQLConnection {
 		}
 	}
 	
-	public void insert_US_Product(String name, String brand, String link, String price, String num_of_ratings, String rating) {
+	public void insert_US_Product(String name, String brand, String link, String price, String num_of_ratings, String rating) throws SQLException {
 		Connection conn = null;
 		String query = "";
+		
+		System.out.println("INSERT INTO US:  " + name);
 		
 		try {
 			query = getQuery("src\\SQLQueries\\insert_US_Product.sql");
@@ -371,7 +381,6 @@ public class SQLConnection {
 			conn = getConnection();
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(query);	
-			conn.close();
 		}catch(Exception e) {
 			System.out.println("INSERT FAILED");
 			System.out.println("\tname: \t\t" + name);
@@ -383,6 +392,9 @@ public class SQLConnection {
 			System.out.println("\nQUERY:\n" + query + "\n");
 			insert_Failure(link);
 			e.printStackTrace();
+		} finally {
+			conn.close();
+			//System.out.println("...INSERTION COMPLETE!!\n");
 		}
 	}
 	
