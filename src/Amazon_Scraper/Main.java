@@ -1,10 +1,6 @@
 package Amazon_Scraper;
 
 import java.util.ArrayList;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
 import Amazon_Scraper.WebDriverThread.Country;
 
 
