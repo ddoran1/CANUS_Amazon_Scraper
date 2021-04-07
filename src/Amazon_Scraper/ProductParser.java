@@ -70,18 +70,26 @@ public class ProductParser {
 			product.setLink(link);
 		
 			//BRAND
-			Element brand = doc.getElementById("bylineInfo");
-			String parsed_brand = parseBrand(brand.html());
-			parsed_brand = parsed_brand.replaceAll("'", "''");
-			product.setBrand(parsed_brand);
-			//System.out.println("\t" + parsed_brand);
+			try {
+				Element brand = doc.getElementById("bylineInfo");
+				String parsed_brand = parseBrand(brand.html());
+				parsed_brand = parsed_brand.replaceAll("'", "''");
+				product.setBrand(parsed_brand);
+				System.out.println("\t" + parsed_brand);
+			} catch(NullPointerException e) {
+				Element brand = doc.getElementById("sellerProfileTriggerId");
+				String parsed_brand = parseBrand(brand.html());
+				parsed_brand = parsed_brand.replaceAll("'", "''");
+				product.setBrand(parsed_brand);
+				System.out.println("\t" + parsed_brand);
+			}
 
 			//NAME
 			Elements name = doc.getElementById("titleSection").getElementsByTag("span");
 			String parsed_name = name.text();
 			parsed_name = parsed_name.replaceAll("'", "''");
 			product.setName(parsed_name);
-			//System.out.println("\t" + parsed_name);
+			System.out.println("\t" + parsed_name);
 		
 	
 			//PRICE
@@ -94,13 +102,13 @@ public class ProductParser {
 				Elements price = doc.getElementById("priceInsideBuyBox_feature_div").getElementsByTag("span");
 				parsed_price = parsePrice(price.text());			
 				product.setPrice(parsed_price);
-				//System.out.println("\t" + parsed_price);
+				System.out.println("\t" + parsed_price);
 				
 			} catch(NullPointerException e){
 				Elements price = doc.getElementById("unifiedPrice_feature_div").getElementsByTag("span");
 				parsed_price = parsePrice(price.text());
 				product.setPrice(parsed_price);
-				//System.out.println("\t" + parsed_price);
+				System.out.println("\t" + parsed_price);
 			}
 
 			//NUMBER OF RATINGS AND PRODUCT RATING
@@ -112,13 +120,13 @@ public class ProductParser {
 				Element num_of_ratings = doc.getElementById("acrCustomerReviewText");
 				String parsed_num_of_ratings = parseNumOfRatings(num_of_ratings.html());	
 				product.setNum_of_ratings(parsed_num_of_ratings);
-				//System.out.println("\t" + parsed_num_of_ratings);
+				System.out.println("\t" + parsed_num_of_ratings);
 		
 				//RATING
 				Elements rating = doc.getElementsByClass("a-icon-alt");
 				String parsed_rating = parseRating(rating.get(0).html());
 				product.setRating(parsed_rating);
-				//System.out.println("\t" + parsed_rating);
+				System.out.println("\t" + parsed_rating);
 			} catch(NullPointerException e) {
 				System.out.println("\tPRODUCT NOT YET RATED");
 			} 
@@ -143,7 +151,7 @@ public class ProductParser {
 			return product;
 			
 		} catch(Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			return null;
 		}
 	}

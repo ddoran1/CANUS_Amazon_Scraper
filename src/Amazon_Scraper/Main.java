@@ -1,6 +1,9 @@
 package Amazon_Scraper;
 
 import java.util.ArrayList;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import Amazon_Scraper.WebDriverThread.Country;
 
 
@@ -24,11 +27,7 @@ public class Main {
 	
 			can_thread.join();
 			us_thread.join();
-			
-/****************************
- * RUN PYTHON SCRIPTS HERE
- ****************************/
-
+					
 		}
 		catch(InterruptedException e) {
 			e.getStackTrace();

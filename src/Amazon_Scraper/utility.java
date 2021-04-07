@@ -158,7 +158,7 @@ public class utility {
 		ArrayList<String> product_link_list = new ArrayList<String>();
 		ArrayList<Product> product_list = new ArrayList<Product>();
 		
-		product_link_list.add("");
+		product_link_list.add("https://www.amazon.ca/Automatic-Beverage-Warmers-Electric-Thermostatic/dp/B07QJXTD68/ref=sr_1_48?dchild=1&keywords=pink+gold+auto+shut+off+coffee+mug+warmer+with+wifi&qid=1617314780&sr=8-48");
 
 		try {
 			ProductParser.productParsingEngine(driver, product_link_list, product_list, country);

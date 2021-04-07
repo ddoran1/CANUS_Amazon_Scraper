@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class WebDriverThread extends Thread{
 	public enum Country {US, CAN}
+	private String key = "webdriver.chrome.driver";
 	private String uri;
 	private Country country;
 	private ArrayList<String> product_link_list = new ArrayList<String>();
@@ -27,7 +28,6 @@ public class WebDriverThread extends Thread{
     public void run() {
     	try {
     		//WEBDRIVER AND DB SETUP
-    		String key = "webdriver.chrome.driver";
     		System.setProperty(key, app_properties.loadSetting(key));
     		WebDriver driver = new ChromeDriver();
     		driver.get(this.getURI());
@@ -38,17 +38,14 @@ public class WebDriverThread extends Thread{
     		//SCAN THE PAGES AND COLLECT PRODUCT LINKS
     		utility.pageScanningEngine(driver, product_link_list);
     		System.out.println(product_link_list.size() + " items scanned:");
-    		for(int i =0; i < product_link_list.size(); i++)
-    			System.out.println(product_link_list.get(i));
-    		System.out.println("\n");
 	
     		//VISIT EACH LINK AND PARSE OUT ALL THE PRODUCT INFORMATION
     		ProductParser.productParsingEngine(driver, product_link_list, product_list, this.getCountry());
 		
     		//CLOSE DRIVER
-    		System.out.println("CLOSING DRIVER...\n");
+    		System.out.println("CLOSING DRIVER FOR " + this.getCountry().toString() + "...");
     		driver.quit();
-    		System.out.println("DRIVER CLOSED");					
+    		System.out.println(this.getCountry().toString() + "DRIVER CLOSED");					
     	}
     	catch(Exception e) {
     		e.printStackTrace();	
