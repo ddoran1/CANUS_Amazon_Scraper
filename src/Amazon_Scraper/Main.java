@@ -29,22 +29,22 @@ public class Main {
 		/*************************************
 		 *****     WebDriver Threads     *****
 		 *************************************/
-//		try {			
-//			conn = new SQLConnection();
-//			WebDriverThread can_thread = new WebDriverThread(app_properties.loadSetting(Country.CAN.toString()), Country.CAN);
-//			WebDriverThread us_thread = new WebDriverThread(app_properties.loadSetting(Country.US.toString()), Country.US);
-//			can_thread.start();
-//			us_thread.start();
-//	
-//			can_thread.join();
-//			us_thread.join();			
-//		}
-//		catch(InterruptedException e) {
-//			e.getStackTrace();
-//		}
-//		catch(Exception e) {
-//			e.getStackTrace();
-//		}
+		try {			
+			conn = new SQLConnection();
+			WebDriverThread can_thread = new WebDriverThread(app_properties.loadSetting(Country.CAN.toString()), Country.CAN);
+			WebDriverThread us_thread = new WebDriverThread(app_properties.loadSetting(Country.US.toString()), Country.US);
+			can_thread.start();
+			us_thread.start();
+	
+			can_thread.join();
+			us_thread.join();			
+		}
+		catch(InterruptedException e) {
+			e.getStackTrace();
+		}
+		catch(Exception e) {
+			e.getStackTrace();
+		}
 		
 		
 		/*************************************
