@@ -45,11 +45,11 @@ public class SQLConnection {
 			e.printStackTrace();
 		}
 		
-		//clearDB();
+		clearDB();
+		init_Brand_Table();
 		init_CANUS_Product_Table();
 		init_CAN_Product_Table();
 		init_US_Product_Table();
-		init_Brand_Table();
 		init_Failure_Table();
 	}
 	
@@ -194,7 +194,7 @@ public class SQLConnection {
 			while(rs.next()){
 					System.out.println("\tprimary_key    = " + rs.getString("primary_key"));
 					System.out.println("\tname           = " + rs.getString("name"));
-					System.out.println("\tbrand          = " + rs.getString("brand"));
+					System.out.println("\tbrand_id       = " + rs.getString("brand_id"));
 					System.out.println("\tlink           = " + rs.getString("link"));
 					System.out.println("\tprice          = " + rs.getString("price"));
 					System.out.println("\tnum_of_ratings = " + rs.getString("num_of_ratings"));
@@ -233,6 +233,27 @@ public class SQLConnection {
 					item_count++;
 	        }
 			System.out.println("Number of items in US table: " + item_count);
+			conn.close();
+		}catch(Exception e) {
+			System.out.println("TABLE VIEW FAILED" + "\n\tconn = " + conn);
+			e.printStackTrace();
+		}
+	}
+	
+	public void view_Brand_Table() {
+		Connection conn = null;
+		
+		try {
+			String query = getQuery("src\\SQLQueries\\view_all_brands.sql");
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery(query);
+			System.out.println("Brand Table:");
+			while(rs.next()){
+				System.out.println("\n\tbrand_id = " + rs.getString("brand_id"));
+				System.out.println("\tbrand_name = " + rs.getString("brand_name"));
+	        }
 			conn.close();
 		}catch(Exception e) {
 			System.out.println("TABLE VIEW FAILED" + "\n\tconn = " + conn);
@@ -301,6 +322,11 @@ public class SQLConnection {
 			statement.executeUpdate(query);
 			
 			query = getQuery("src\\SQLQueries\\drop_US_Product_Table.sql");
+			conn = getConnection();
+			statement = conn.createStatement();
+			statement.executeUpdate(query);
+			
+			query = getQuery("src\\SQLQueries\\drop_brand_table.sql");
 			conn = getConnection();
 			statement = conn.createStatement();
 			statement.executeUpdate(query);
@@ -412,6 +438,30 @@ public class SQLConnection {
 			System.out.println("\trating: \t" + rating);
 			System.out.println("\nQUERY:\n" + query + "\n");
 			insert_Failure(link);
+			e.printStackTrace();
+		} finally {
+			conn.close();
+			//System.out.println("...INSERTION COMPLETE!!\n");
+		}
+	}
+	
+	public void insert_brand(String brand) throws SQLException {
+		Connection conn = null;
+		String query = "";
+		
+		System.out.println("INSERT INTO BRAND:  " + brand);
+		
+		try {
+			query = getQuery("src\\SQLQueries\\insert_brand_table.sql");
+			query = query.replace("$brand_name", brand);
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);	
+		}catch(Exception e) {
+			System.out.println("INSERT FAILED");
+			System.out.println("\tbrand: \t\t" + brand);
+			System.out.println("\nQUERY:\n" + query + "\n");
 			e.printStackTrace();
 		} finally {
 			conn.close();

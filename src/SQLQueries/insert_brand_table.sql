@@ -1,5 +1,5 @@
-INSERT INTO brand(name)
-	VALUES('$name');
+INSERT INTO brand(brand_name)
+	VALUES('$brand_name');
 	
 /*
 INSERT INTO bar (description, foo_id) VALUES
