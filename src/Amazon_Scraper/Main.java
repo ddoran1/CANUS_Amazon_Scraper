@@ -1,21 +1,16 @@
 package Amazon_Scraper;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import Amazon_Scraper.WebDriverThread.Country;
 
 
 /*
- * This is the driver class that will initiate the WebDriver and be the main managing engine
+ * This is the driver class that will serve as be the main engine. The main() 
+ * will initiate the WebDriver threads from WebDriverThread.java and then
+ * proceed to call on the python scripts that  will process the raw data
  * 
  * @author David Doran
  */
@@ -41,9 +36,11 @@ public class Main {
 		}
 		catch(InterruptedException e) {
 			e.getStackTrace();
+			System.exit(0);
 		}
 		catch(Exception e) {
 			e.getStackTrace();
+			System.exit(0);
 		}
 		
 		

@@ -45,10 +45,11 @@ public class SQLConnection {
 			e.printStackTrace();
 		}
 		
-		clearDB();
+		//clearDB();
 		init_CANUS_Product_Table();
 		init_CAN_Product_Table();
 		init_US_Product_Table();
+		init_Brand_Table();
 		init_Failure_Table();
 	}
 	
@@ -105,6 +106,26 @@ public class SQLConnection {
 			System.out.println("US TABLE CREATION SUCCESSFUL"); 
 		}catch(Exception e) {
 			System.out.println("US CREATE TABLE FAILED" 
+		+ "\n\tconn = " + conn
+		+ "\n\tquery = " + query);
+			
+			e.printStackTrace();
+		}
+	}
+	
+	public void init_Brand_Table() {
+		Connection conn = null;
+		String query = "";
+		try {
+			query = getQuery("src\\SQLQueries\\create_brand_table.sql");
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);
+			conn.close();
+			System.out.println("BRAND TABLE CREATION SUCCESSFUL"); 
+		}catch(Exception e) {
+			System.out.println("BRAND TABLE FAILED" 
 		+ "\n\tconn = " + conn
 		+ "\n\tquery = " + query);
 			

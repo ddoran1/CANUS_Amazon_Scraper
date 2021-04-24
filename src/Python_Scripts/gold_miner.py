@@ -3,33 +3,35 @@
 #  stream when executing from java, all else is ignored or not piped through
 ###############################################################################
 import sys
-import sqlite3
-
-def getQuery(file_name):
-    path = "src\\SQLQueries\\" + file_name + ".sql"
-    file = open(path, "r")
-    query = file.read()
-    file.close()
-    return query
+from sqlite_connection import sqlite_connection
 
 if __name__ == '__main__':
-    con = sqlite3.connect('appDB.db')
-    cur = con.cursor()
-    query = getQuery("view_all_CAN_Product")
-    cur.execute(query)
-    results = cur.fetchall()
-    if results is None:
+    con = sqlite_connection()
+    dict, keys = con.get_dict_from_table("view_all_CAN_Product")
+
+    if dict is None:
         print("NO GOOD NO GOOD")
     else:
         file = open('src\\Python_Scripts\\output.txt', 'w', encoding='utf-8')
-        for x in results:
-            file.write(str(x) + "\n")
-            print("DATABASE EXPORT COMPLETE!")
+        for row in dict: 
+            file.write(str(row) + " : {\n")
+            file.write("\t" + str(keys[1]) + " : " + str(dict[row][keys[1]]) + "\n")
+            file.write("\t" + str(keys[2]) + " : " + str(dict[row][keys[2]]) + "\n")
+            file.write("\t" + str(keys[3]) + " : " + str(dict[row][keys[3]]) + "\n")
+            file.write("\t" + str(keys[4]) + " : " + str(dict[row][keys[4]]) + "\n")
+            file.write("\t" + str(keys[5]) + " : " + str(dict[row][keys[5]]) + "\n")
+            file.write("\t" + str(keys[6]) + " : " + str(dict[row][keys[6]]) + "\n")
+            file.write("\t}\n")
+
+        file.write("}")
+        print("DATABASE EXPORT COMPLETE!")
         file.close()
-    cur.close()
+
+    
+    
+    
     
 
 
 
 
-#return "BLAH"
