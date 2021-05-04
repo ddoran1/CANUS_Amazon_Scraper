@@ -343,6 +343,8 @@ public class SQLConnection {
 		}
 	}
 	
+	//public void insert_CANUS_Product_raw();
+	
 	public void insert_CANUS_Product(String name, String brand, String link, String price, String num_of_ratings, String rating) {
 		Connection conn = null;
 		String query = "";
@@ -375,6 +377,8 @@ public class SQLConnection {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	public void insert_CAN_Product(String name, String brand, String link, String price, String num_of_ratings, String rating) throws SQLException {
 		Connection conn = null;
@@ -409,6 +413,8 @@ public class SQLConnection {
 			conn.close();
 		}
 	}
+	
+	
 	
 	public void insert_US_Product(String name, String brand, String link, String price, String num_of_ratings, String rating) throws SQLException {
 		Connection conn = null;

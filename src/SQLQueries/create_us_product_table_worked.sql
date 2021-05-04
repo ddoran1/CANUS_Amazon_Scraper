@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS US_Product(
+CREATE TABLE IF NOT EXISTS us_product_table_worked(
 	primary_key INTEGER PRIMARY KEY,
 	name TEXT NOT NULL, 
 	brand_id INTEGER,
@@ -9,4 +9,4 @@ CREATE TABLE IF NOT EXISTS US_Product(
 	rating VARCHAR(3),
 	FOREIGN KEY (brand_id)
        REFERENCES brand (brand_id) 
-	);
+);
