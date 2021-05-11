@@ -52,7 +52,7 @@ public class SQLConnection {
 		init_US_Product_Table();
 		init_Failure_Table();
 	}
-	
+		
 	public void init_CANUS_Product_Table() {
 		Connection conn = null;
 		String query = "";
@@ -343,8 +343,6 @@ public class SQLConnection {
 		}
 	}
 	
-	//public void insert_CANUS_Product_raw();
-	
 	public void insert_CANUS_Product(String name, String brand, String link, String price, String num_of_ratings, String rating) {
 		Connection conn = null;
 		String query = "";
@@ -378,16 +376,14 @@ public class SQLConnection {
 		}
 	}
 	
-	
-	
-	public void insert_CAN_Product(String name, String brand, String link, String price, String num_of_ratings, String rating) throws SQLException {
+	public void insert_CAN_Product_Raw(String name, String brand, String link, String price, String num_of_ratings, String rating) throws SQLException {
 		Connection conn = null;
 		String query = "";
 		
 		System.out.println("INSERTING...\t" + name);
 		
 		try {
-			query = getQuery("src\\SQLQueries\\insert_CAN_Product.sql");
+			query = getQuery("src\\SQLQueries\\insert_can_product_raw.sql");
 			query = query.replace("$name", name);
 			query = query.replace("$brand", brand);
 			query = query.replace("$link", link);
@@ -414,16 +410,14 @@ public class SQLConnection {
 		}
 	}
 	
-	
-	
-	public void insert_US_Product(String name, String brand, String link, String price, String num_of_ratings, String rating) throws SQLException {
+	public void insert_US_Product_Raw(String name, String brand, String link, String price, String num_of_ratings, String rating) throws SQLException {
 		Connection conn = null;
 		String query = "";
 		
 		System.out.println("INSERT INTO US:  " + name);
 		
 		try {
-			query = getQuery("src\\SQLQueries\\insert_US_Product.sql");
+			query = getQuery("src\\SQLQueries\\insert_us_product_table_raw.sql");
 			query = query.replace("$name", name);
 			query = query.replace("$brand", brand);
 			query = query.replace("$link", link);

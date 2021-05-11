@@ -136,13 +136,13 @@ public class ProductParser {
 			switch(country) {
 			
 				case CAN:{
-					Main.conn.insert_CAN_Product(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
+					Main.conn.insert_CAN_Product_Raw(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
 						product.getNum_of_ratings(), product.getRating());
 					break;
 				}
 				
 				case US:{
-					Main.conn.insert_US_Product(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
+					Main.conn.insert_US_Product_Raw(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
 							product.getNum_of_ratings(), product.getRating());
 					break;
 				}
