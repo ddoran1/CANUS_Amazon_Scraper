@@ -5,7 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.ArrayList;
 
 public class WebDriverThread extends Thread{
-	public enum Country {US, CAN}
+	public enum Country {US, CAN, TEST}
 	private String key = "webdriver.chrome.driver";
 	private String uri;
 	private Country country;

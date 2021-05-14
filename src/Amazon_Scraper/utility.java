@@ -10,7 +10,8 @@ import Amazon_Scraper.WebDriverThread.Country;
 /*
  * This class is a collection of methods for general purpose in Main.java; including testing and data viewing.
  * 
- * NOTE:  FUTURE ITEREATION COULD USE JSOUP AND DO AWAY WITH THE ARBITRARY WAIT TIMES
+ * NOTE:  FUTURE ITEREATION COULD USE JSOUP AND DO AWAY WITH THE ARBITRARY WAIT TIMES AND
+ *        TRACK DOWN ANY METHODS THAT USE XPATHS
  * 
  * @author David Doran
  */
@@ -163,10 +164,8 @@ public class utility {
 		try {
 			ProductParser.productParsingEngine(driver, product_link_list, product_list, country);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for(int i =0; i < product_link_list.size(); i++)
