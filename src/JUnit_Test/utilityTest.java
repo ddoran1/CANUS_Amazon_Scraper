@@ -26,7 +26,7 @@ class utilityTest {
 	
 	@Test
 	@DisplayName("Verifying pageScanningEngine(...)")   
-	public void test_getConnection() {
+	public void test_pageScanningEngine() {
 		utility.pageScanningEngine(driver, product_link_list); 
 		assertNotNull("Issue with pageScanningEngine(...)", product_link_list); 
 	}

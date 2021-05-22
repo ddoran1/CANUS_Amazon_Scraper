@@ -26,8 +26,8 @@ public class Main {
 		 *************************************/
 //		try {			
 //			conn = new SQLConnection();
-//			WebDriverThread can_thread = new WebDriverThread(app_properties.loadSetting(Country.CAN.toString()), Country.CAN);
-//			WebDriverThread us_thread = new WebDriverThread(app_properties.loadSetting(Country.US.toString()), Country.US);
+//			WebDriverThread can_thread = new WebDriverThread(app_properties.loadSetting(Country.CAN), Country.CAN);
+//			WebDriverThread us_thread = new WebDriverThread(app_properties.loadSetting(Country.US), Country.US);
 //			can_thread.start();
 //			us_thread.start();
 //	
@@ -74,7 +74,7 @@ public class Main {
 		 ******     DB Update Driver    ******
 		 *************************************/
 		try {
-			conn = new SQLConnection();
+//			conn = new SQLConnection();
 //			conn.insert_brand("BrandX");
 //			conn.insert_brand("Butts n stuff");
 //			conn.insert_CAN_Product("stuff", "BrandX", "amazon.ca", "$50", "123", "4.5");

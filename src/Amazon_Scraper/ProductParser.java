@@ -50,7 +50,6 @@ public class ProductParser {
 	}
 	
 	private static void logErrorList(ArrayList<String> error_list) {
-		
 		for(int i=0; i < error_list.size(); i++) 
 			Main.conn.insert_Failure(error_list.get(i));
 	}
@@ -146,6 +145,10 @@ public class ProductParser {
 							product.getNum_of_ratings(), product.getRating());
 					break;
 				}
+				
+				case TEST:{
+					break;
+				}
 			}
 			
 			return product;
@@ -202,70 +205,4 @@ public class ProductParser {
 		return num_of_rating;
 	}
 	
-	
-	//********************************************************************
-	//**  WAIT AND CHECK METHODS: USED FOR CHECKING IF HTML WAS LOADED  **
-	//********************************************************************
-		
-	
-	public static void wait(WebDriver driver) {
-		boolean add_button = false;
-		
-		try {
-			while(!add_button){
-				
-				if(add_button = check(driver))
-					break;
-				
-				Thread.sleep(300);
-				System.out.println("Waiting for cart to load.............");
-			}			 
-		}catch(InterruptedException e) {
-			e.printStackTrace();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void waitForCSS(WebDriver driver, String css_selector) {
-		boolean add_button = false;
-		
-		try {
-			while(!add_button){
-				
-				if(add_button = checkCSS(driver, css_selector))
-					break;
-				
-				Thread.sleep(300);
-				System.out.println("Waiting for HTML component to load.............");
-			}			 
-		}catch(InterruptedException e) {
-			e.printStackTrace();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static boolean checkCSS(WebDriver driver, String css_selector) {
-		try {
-            @SuppressWarnings("unused")
-			WebElement add_button = driver.findElement(By.cssSelector(css_selector));
-                                             			
-            return true;			
-		}catch(NoSuchElementException e) {
-			return false;
-		}
-	}
-	
-	private static boolean check(WebDriver driver) {
-		try {
-            @SuppressWarnings("unused")
-			WebElement add_button = driver.findElement(By.id("addToCart_feature_div"));
-                                             			
-            return true;			
-		}catch(NoSuchElementException e) {
-			return false;
-		}
-	}
-
 }

@@ -10,13 +10,14 @@ import java.util.Properties;
 import Amazon_Scraper.WebDriverThread.Country;
 
 public class app_properties {
+	private static String path = "src//Amazon_Scraper//settings.xml";
 	
 	public static String loadSetting(Country country) {
 		String value = "";
 		String key = country.toString();
 		try {
 			Properties loadProps = new Properties();
-			loadProps.loadFromXML(new FileInputStream(new File("src//Amazon_Scraper//settings.xml")));
+			loadProps.loadFromXML(new FileInputStream(new File(path)));
 			value = loadProps.getProperty(key);
 		} catch (InvalidPropertiesFormatException e) {
 			e.printStackTrace();
@@ -35,7 +36,7 @@ public class app_properties {
 		String value = "";
 		try {
 			Properties loadProps = new Properties();
-			loadProps.loadFromXML(new FileInputStream(new File("src//Amazon_Scraper//settings.xml")));
+			loadProps.loadFromXML(new FileInputStream(new File(path)));
 			value = loadProps.getProperty(key);
 		} catch (InvalidPropertiesFormatException e) {
 			e.printStackTrace();
@@ -58,9 +59,9 @@ public class app_properties {
 
 	    try {
 		    Properties new_property = new Properties();
-		    new_property.loadFromXML(new FileInputStream(new File("src//Amazon_Scraper//settings.xml")));
+		    new_property.loadFromXML(new FileInputStream(new File(path)));
 		    new_property.setProperty(key, value);
-		    new_property.storeToXML(new FileOutputStream(new File("src//Amazon_Scraper//settings.xml")), "");
+		    new_property.storeToXML(new FileOutputStream(new File(path)), "");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
