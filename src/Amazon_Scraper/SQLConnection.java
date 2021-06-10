@@ -46,11 +46,16 @@ public class SQLConnection {
 		}
 		
 		clearDB();
-		init_Brand_Table();
-		init_CANUS_Product_Table();
-		init_CAN_Product_Table();
-		init_US_Product_Table();
+		
+		init_US_Product_Table_Raw();
+		init_CAN_Product_Table_Raw();
 		init_Failure_Table();
+		init_Brand_Table();
+		
+		init_CAN_Product_Table_Worked();
+		init_US_Product_Table_Worked();
+		init_CANUS_Product_Table();
+		
 	}
 		
 	public void init_CANUS_Product_Table() {
@@ -73,11 +78,11 @@ public class SQLConnection {
 		}
 	}
 	
-	public void init_CAN_Product_Table() {
+	public void init_CAN_Product_Table_Raw() {
 		Connection conn = null;
 		String query = "";
 		try {
-			query = getQuery("src\\SQLQueries\\create_CAN_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\create_can_product_table_raw.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
@@ -93,11 +98,51 @@ public class SQLConnection {
 		}
 	}
 	
-	public void init_US_Product_Table() {
+	public void init_CAN_Product_Table_Worked() {
 		Connection conn = null;
 		String query = "";
 		try {
-			query = getQuery("src\\SQLQueries\\create_US_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\create_can_product_table_worked.sql");
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);
+			conn.close();
+			System.out.println("CAN TABLE CREATION SUCCESSFUL"); 
+		}catch(Exception e) {
+			System.out.println("CAN CREATE TABLE FAILED" 
+		+ "\n\tconn = " + conn
+		+ "\n\tquery = " + query);
+			
+			e.printStackTrace();
+		}
+	}
+	
+	public void init_US_Product_Table_Raw() {
+		Connection conn = null;
+		String query = "";
+		try {
+			query = getQuery("src\\SQLQueries\\create_us_product_table_raw.sql");
+			
+			conn = getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);
+			conn.close();
+			System.out.println("US TABLE CREATION SUCCESSFUL"); 
+		}catch(Exception e) {
+			System.out.println("US CREATE TABLE FAILED" 
+		+ "\n\tconn = " + conn
+		+ "\n\tquery = " + query);
+			
+			e.printStackTrace();
+		}
+	}
+	
+	public void init_US_Product_Table_Worked() {
+		Connection conn = null;
+		String query = "";
+		try {
+			query = getQuery("src\\SQLQueries\\create_us_product_table_worked.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
