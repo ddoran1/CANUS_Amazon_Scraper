@@ -62,7 +62,7 @@ public class SQLConnection {
 		Connection conn = null;
 		String query = "";
 		try {
-			query = getQuery("src\\SQLQueries\\create_CANUS_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\create_canus_product_table.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
@@ -182,7 +182,7 @@ public class SQLConnection {
 		Connection conn = null;
 		String query = "";
 		try {
-			query = getQuery("src\\SQLQueries\\create_Failure_Table.sql");
+			query = getQuery("src\\SQLQueries\\create_failure_table.sql");
 			
 			conn = getConnection();
 			Statement statement = conn.createStatement();
@@ -356,17 +356,17 @@ public class SQLConnection {
 		String query = "";
 				
 		try {
-			query = getQuery("src\\SQLQueries\\drop_CANUS_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\drop_canus_product_table.sql");
 			conn = getConnection();
 			statement = conn.createStatement();
 			statement.executeUpdate(query);
 			
-			query = getQuery("src\\SQLQueries\\drop_CAN_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\drop_can_product_table.sql");
 			conn = getConnection();
 			statement = conn.createStatement();
 			statement.executeUpdate(query);
 			
-			query = getQuery("src\\SQLQueries\\drop_US_Product_Table.sql");
+			query = getQuery("src\\SQLQueries\\drop_us_product_table.sql");
 			conn = getConnection();
 			statement = conn.createStatement();
 			statement.executeUpdate(query);
@@ -376,7 +376,7 @@ public class SQLConnection {
 			statement = conn.createStatement();
 			statement.executeUpdate(query);
 			
-			query = getQuery("src\\SQLQueries\\drop_Failure_Table.sql");
+			query = getQuery("src\\SQLQueries\\drop_failure_table.sql");
 			conn = getConnection();
 			statement = conn.createStatement();
 			statement.executeUpdate(query);
@@ -489,7 +489,7 @@ public class SQLConnection {
 			//System.out.println("...INSERTION COMPLETE!!\n");
 		}
 	}
-	
+		
 	public void insert_brand(String brand) throws SQLException {
 		Connection conn = null;
 		String query = "";
@@ -567,10 +567,6 @@ public class SQLConnection {
 	    }
 	    catch(FileNotFoundException e){
 	        e.printStackTrace();
-//	        Prints out file names at given point in directory
-//	        File file = new File(".");
-//	        for(String fileNames : file.list()) 
-//	        	System.out.println(fileNames);
 	    }
 	    catch(IOException e){
 	        e.printStackTrace();

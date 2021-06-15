@@ -12,6 +12,11 @@ import Amazon_Scraper.WebDriverThread.Country;
 public class app_properties {
 	private static String path = "src//Amazon_Scraper//settings.xml";
 	
+	/*
+	 * This static method calls retrieves the Amazon link associated
+	 * with a particular country, parameter given as an Enum defined in
+	 * WebdriverThread.java
+	 */
 	public static String loadSetting(Country country) {
 		String value = "";
 		String key = country.toString();
@@ -31,7 +36,10 @@ public class app_properties {
 		  
 		 return value;
 	}
-	
+	/*
+	 * This static method calls retrieves the data associate with the 
+	 * given key in settings.xml 
+	 */
 	public static String loadSetting(String key) {
 		String value = "";
 		try {
