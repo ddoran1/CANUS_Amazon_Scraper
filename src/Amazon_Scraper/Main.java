@@ -24,56 +24,58 @@ public class Main {
 		/*************************************
 		 *****     WebDriver Threads     *****
 		 *************************************/
-//		try {			
-//			conn = new SQLConnection();
-//			WebDriverThread can_thread = new WebDriverThread(app_properties.loadSetting(Country.CAN), Country.CAN);
-//			WebDriverThread us_thread = new WebDriverThread(app_properties.loadSetting(Country.US), Country.US);
-//			can_thread.start();
-//			us_thread.start();
-//	
-//			can_thread.join();
-//			us_thread.join();			
-//		}
-//		catch(InterruptedException e) {
-//			e.getStackTrace();
-//			System.exit(0);
-//		}
-//		catch(Exception e) {
-//			e.getStackTrace();
-//			System.exit(0);
-//		}
+		
+		//FIX PROPERTIES FOLDER FOR US AND CAN AMAZON WEBSITES
+		try {			
+			conn = new SQLConnection();
+			WebDriverThread can_thread = new WebDriverThread(app_properties.loadSetting(Country.CAN), Country.CAN);
+			WebDriverThread us_thread = new WebDriverThread(app_properties.loadSetting(Country.US), Country.US);
+			can_thread.start();
+			us_thread.start();
+	
+			can_thread.join();
+			us_thread.join();			
+		}
+		catch(InterruptedException e) {
+			e.getStackTrace();
+			System.exit(0);
+		}
+		catch(Exception e) {
+			e.getStackTrace();
+			System.exit(0);
+		}
 		
 		
 		/*************************************
 		 ******     Python Scripts      ******
 		 *************************************/
-//		try {
-//			System.out.println("EXPORTING CAN PRODUCT ENTRIES TO FILE...");
-//			Process p = Runtime.getRuntime().exec("python ./src/Python_Scripts/gold_miner.py");
-//			BufferedReader output = new BufferedReader(new InputStreamReader(p.getInputStream()));
-//			BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-//			String ret = output.readLine();
-//			System.out.println(ret);
-//			String line = "";
-//			while ((line = error.readLine()) != null) {
-//	            System.out.println(line);
-//	        }
-//			
-//			error.close();
-//			output.close();
-//			
-//			System.out.println("SYSTEM EXIT CODE: " + p.exitValue());
-//			
-//		}
-//		catch(Exception e) {
-//			System.out.println("Python script:  FAILED TO EXECUTE\n");
-//			e.printStackTrace();
-//		}
+		try {
+			System.out.println("EXPORTING CAN PRODUCT ENTRIES TO FILE...");
+			Process p = Runtime.getRuntime().exec("python ./src/Python_Scripts/gold_miner.py");
+			BufferedReader output = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+			String ret = output.readLine();
+			System.out.println(ret);
+			String line = "";
+			while ((line = error.readLine()) != null) {
+	            System.out.println(line);
+	        }
+			
+			error.close();
+			output.close();
+			
+			System.out.println("SYSTEM EXIT CODE: " + p.exitValue());
+			
+		}
+		catch(Exception e) {
+			System.out.println("Python script:  FAILED TO EXECUTE\n");
+			e.printStackTrace();
+		}
 		
 		/*************************************
 		 ******     DB Update Driver    ******
 		 *************************************/
-		try {
+//		try {
 //			conn = new SQLConnection();
 //			conn.insert_brand("BrandX");
 //			conn.insert_brand("Butts n stuff");
@@ -83,10 +85,22 @@ public class Main {
 //			//conn.view_Brand_Table();
 //			conn.search_By_Attribute("BrandX");
 //			conn.view_CAN_Product_Table();
+//		
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
 		
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		/*************************************
+		 ******     Update Properties   ******
+		 *************************************/
+//		try {
+//			app_properties.saveSetting("US", "https://www.amazon.com/");
+//			app_properties.saveSetting("CAN", "https://www.amazon.ca/");
+//		}
+//		catch(Exception e){
+//			e.printStackTrace();
+//			}
+//		
 	}
 
 }
