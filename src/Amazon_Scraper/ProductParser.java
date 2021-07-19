@@ -100,13 +100,13 @@ public class ProductParser {
 			try {
 				Elements price = doc.getElementById("priceInsideBuyBox_feature_div").getElementsByTag("span");
 				parsed_price = parsePrice(price.text());			
-				product.setPrice(parsed_price);
+				product.setFloorPrice(parsed_price);
 				System.out.println("\t" + parsed_price);
 				
 			} catch(NullPointerException e){
 				Elements price = doc.getElementById("unifiedPrice_feature_div").getElementsByTag("span");
 				parsed_price = parsePrice(price.text());
-				product.setPrice(parsed_price);
+				product.setFloorPrice(parsed_price);
 				System.out.println("\t" + parsed_price);
 			}
 
@@ -135,14 +135,14 @@ public class ProductParser {
 			switch(country) {
 			
 				case CAN:{
-					Main.conn.insert_CAN_Product_Raw(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
-						product.getNum_of_ratings(), product.getRating());
+					Main.conn.insert_CAN_Product_Raw(product.getName(), product.getBrand(), product.getLink(), product.getFloorPrice(),
+						"", product.getNum_of_ratings(), product.getRating());
 					break;
 				}
 				
 				case US:{
-					Main.conn.insert_US_Product_Raw(product.getName(), product.getBrand(), product.getLink(), product.getPrice(),
-							product.getNum_of_ratings(), product.getRating());
+					Main.conn.insert_US_Product_Raw(product.getName(), product.getBrand(), product.getLink(), product.getFloorPrice(),
+							"", product.getNum_of_ratings(), product.getRating());
 					break;
 				}
 				

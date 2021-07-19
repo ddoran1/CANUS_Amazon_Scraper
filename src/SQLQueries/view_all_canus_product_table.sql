@@ -1,0 +1,1 @@
+select * from canus_product_table;

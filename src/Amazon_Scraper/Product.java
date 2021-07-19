@@ -11,15 +11,17 @@ public class Product {
 	private String link;
 	private String name;
 	private String brand;
-	private String price;
+	private String floor_price;
+	private String ceiling_price;
 	private String rating;
 	private String num_of_ratings;
 	
 	
-	public Product(String linkIn, String nameIn, String brandIn, String priceIn, String ratingIn, String num_of_ratingsIn) {
+	public Product(String linkIn, String nameIn, String brandIn, String floor_priceIn, String ceiling_priceIn, String ratingIn, String num_of_ratingsIn) {
 		link = linkIn;
 		name = nameIn;
-		price = priceIn;
+		floor_price = floor_priceIn;
+		ceiling_price = ceiling_priceIn;
 		rating = ratingIn;
 		num_of_ratings = num_of_ratingsIn;
 	}
@@ -28,7 +30,8 @@ public class Product {
 		link = "";
 		name = "";
 		brand = "";
-		price = "";
+		floor_price = "";
+		ceiling_price = "";
 		rating = "";
 		num_of_ratings = "";
 	}
@@ -63,13 +66,22 @@ public class Product {
 	}
 
 
-	public String getPrice() {
-		return price;
+	public String getFloorPrice() {
+		return floor_price;
 	}
 
 
-	public void setPrice(String amount) {
-		this.price = amount;
+	public void setFloorPrice(String floor_price) {
+		this.floor_price = floor_price;
+	}
+	
+	public String getCeilingPrice() {
+		return floor_price;
+	}
+
+
+	public void setCeilingPrice(String ceiling_price) {
+		this.ceiling_price = ceiling_price;
 	}
 
 
@@ -96,7 +108,8 @@ public class Product {
 		System.out.println("\tname: \t\t" + name);
 		System.out.println("\tbrand: \t\t" + brand);
 		System.out.println("\tlink: \t\t" + link);
-		System.out.println("\tprice: \t\t" + price);
+		System.out.println("\tfloor_price: \t\t" + floor_price);
+		System.out.println("\tceiling_price: \t\t" + ceiling_price);
 		System.out.println("\tnum_of_ratings: " + num_of_ratings);
 		System.out.println("\trating: \t" + rating);
 		

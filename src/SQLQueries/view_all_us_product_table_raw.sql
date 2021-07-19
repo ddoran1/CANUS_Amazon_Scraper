@@ -1,0 +1,1 @@
+select * from us_product_table_raw;
